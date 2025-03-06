@@ -96,3 +96,7 @@ eventify-frontend/
 ├── .gitignore                       
 ├── package.json                     
 └── README.md                        
+
+# Inital setup 
+
+![alt text](image.png)
