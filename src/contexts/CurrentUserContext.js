@@ -15,7 +15,7 @@ export const CurrentUserProvider = ({ children }) => {
 
     const handlemount = async () => {
         try {
-            const data = await axiosReq.get("/auth/user/");
+            const data = await axiosReq.get("api/auth/user/");
             setCurrentUser(data);
         } catch (error) {
             console.error(error);
