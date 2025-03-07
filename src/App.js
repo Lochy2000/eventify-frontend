@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Component imports
-import Navbar from './components/common/Navbar';
+import NavBar from './components/common/NavBar';
 
 import SignInForm from './pages/auth/SignInForm';
 import SignUpForm from './pages/auth/SignUpForm';
@@ -23,10 +23,10 @@ const NotFoundPage = () => <div className="container py-4"><h1>404 - Not Found</
 
 function App() {
   return (
-    <CurrentUserProvider>
-      <Router>
+    <Router>
+      <CurrentUserProvider>
         <div className="d-flex flex-column min-vh-100">
-          <Navbar />
+          <NavBar />
             <main className="flex-grow-1">
               <Routes>
                 <Route path="/" element={<HomePage />} />
@@ -42,8 +42,9 @@ function App() {
             </main>
           <Footer />
         </div>
+      </CurrentUserProvider>
     </Router>
-  </CurrentUserProvider>
+
   );
 }
 

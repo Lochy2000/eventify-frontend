@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCurrentUser } from "../contexts/CurrentUserContext";
 
-export const useRedirect = (redirect) => {
+export const useRedirect = (userAuthStatus) => {
     const currentUser = useCurrentUser();
     const navigate = useNavigate();
 
@@ -19,5 +19,5 @@ export const useRedirect = (redirect) => {
         };
 
         handleRedirect();
-    }, [currentUser, navigate, redirect]);
+    }, [currentUser, navigate, userAuthStatus]);
 };
