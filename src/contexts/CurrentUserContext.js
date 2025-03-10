@@ -1,6 +1,5 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import axios from "axios";
-import { axiosReq, axiosRes } from "../api/axiosDefaults";
+import { createContext, useContext, useEffect, useState, useMemo } from "react";
+import axiosInstance from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { removeTokenTimeStamp, shouldRefreshToken } from "../utils/utils";
 
@@ -16,10 +15,18 @@ export const CurrentUserProvider = ({ children }) => {
 
   const handleMount = async () => {
     try {
-      const { data } = await axiosRes.get("api/auth/user/");
-      setCurrentUser(data);
+      // Check if we have a token in localStorage
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        // Fetch the current user data
+        const { data } = await axiosInstance.get("/auth/user/");
+        setCurrentUser(data);
+      }
     } catch (err) {
-      console.log(err);
+      // If token is invalid, clear everything
+      console.error(err);
+      localStorage.removeItem('accessToken');
+      removeTokenTimeStamp();
     }
   };
 
@@ -28,49 +35,26 @@ export const CurrentUserProvider = ({ children }) => {
   }, []);
 
   useMemo(() => {
-    axiosReq.interceptors.request.use(
-      async (config) => {
+    // Check if token needs refreshing
+    const refreshToken = async () => {
+      try {
         if (shouldRefreshToken()) {
-          try {
-            await axios.post("/api/token/refresh/");
-          } catch (err) {
-            setCurrentUser((prevCurrentUser) => {
-              if (prevCurrentUser) {
-                navigate("/signin");
-              }
-              return null;
-            });
-            removeTokenTimeStamp();
-            return config;
+          const { data } = await axiosInstance.post("/auth/token/refresh/");
+          if (data.access) {
+            localStorage.setItem('accessToken', data.access);
           }
         }
-        return config;
-      },
-      (err) => {
-        return Promise.reject(err);
+      } catch (err) {
+        // If refresh fails, log out user
+        setCurrentUser(null);
+        removeTokenTimeStamp();
+        localStorage.removeItem('accessToken');
+        navigate("/signin");
       }
-    );
+    };
 
-    axiosRes.interceptors.response.use(
-      (response) => response,
-      async (err) => {
-        if (err.response?.status === 401) {
-          try {
-            await axios.post("/api/token/refresh/");
-          } catch (err) {
-            setCurrentUser((prevCurrentUser) => {
-              if (prevCurrentUser) {
-                navigate("/signin");
-              }
-              return null;
-            });
-            removeTokenTimeStamp();
-          }
-          return axios(err.config);
-        }
-        return Promise.reject(err);
-      }
-    );
+    const interval = setInterval(refreshToken, 5 * 60 * 1000); // Check every 5 minutes
+    return () => clearInterval(interval);
   }, [navigate]);
 
   return (

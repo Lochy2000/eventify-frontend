@@ -2,30 +2,40 @@ import React from "react";
 import { Navbar as BootstrapNavbar, Container, Nav, Button } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { useCurrentUser, useSetCurrentUser } from "../../contexts/CurrentUserContext";
-import axios from "axios";
+//
+import axiosInstance from "../../services/api";
 import { removeTokenTimeStamp } from "../../utils/utils";
 import { useClickOutsideToggle } from "../../hooks/useClickOutsideToggle";
 import styles from "../../styles/NavBar.module.css";
 
+// Navbar component
 const NavBar = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
 
   const { expanded, setExpanded, ref } = useClickOutsideToggle();
   
+  // Handle sign out
   const handleSignOut = async () => {
     try {
-      await axios.post("api/auth/logout/");
+      // Send a POST request to the backend
+      await axiosInstance.post("/auth/logout/");
+      //remove token from local storage
+      localStorage.removeItem("accessToken");
+      // Set the current user to null
       setCurrentUser(null);
+      // Remove the token timestamp
       removeTokenTimeStamp();
     } catch (error) {
       console.error(error);
     }
   };
 
+  // Logged in links
   const loggedInLinks = (
     <>
       <NavLink
+      // Add the isActive prop to the NavLink component
         className={({ isActive }) =>
           `${styles.NavLink} ${isActive ? styles.Active : ""}`
         }
@@ -34,6 +44,7 @@ const NavBar = () => {
         Events
       </NavLink>
       <NavLink
+      
         className={({ isActive }) => 
           `${styles.NavLink} ${isActive ? styles.Active : ""}`
         }

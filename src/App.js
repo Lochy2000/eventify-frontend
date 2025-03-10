@@ -27,7 +27,7 @@ function App() {
       <CurrentUserProvider>
         <div className="d-flex flex-column min-vh-100">
           <NavBar />
-            <main className="flex-grow-1">
+            <main className="flex-grow-1 " style={{ paddingTop: "70px" }}>
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/signin" element={<SignInForm />} />

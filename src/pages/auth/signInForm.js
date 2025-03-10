@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
@@ -15,9 +14,13 @@ import { useRedirect } from "../../hooks/useRedirect";
 import { setTokenTimeStamp } from "../../utils/utils";
 import styles from "../../styles/AuthForms.module.css";
 
+import axiosInstance from "../../services/api";
+
 const SignInForm = () => {
+  // Redirect the user if they are already logged in
     useRedirect("loggedIn");
     const setCurrentUser = useSetCurrentUser();
+    // State to store sign in data
     const [signInData, setSignInData] = useState({
     username: "",
     password: "",
@@ -25,21 +28,31 @@ const SignInForm = () => {
     const { username, password } = signInData;
 
     const [errors, setErrors] = useState({});
+    // Use the navigate hook to redirect to the previous page
     const navigate = useNavigate();
 
+    // Handle form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         try {
-        const { data } = await axios.post("/api/auth/login/", signInData);
+        // Send a POST request to the backend
+        const { data } = await axiosInstance.post("/auth/login/", signInData);
+        // If the response contains an access token, store it in local storage
+        if (data.access) {
+        localStorage.setItem("accessToken", data.access);
+        }
+        // Set the current user
         setCurrentUser(data.user);
+        // Set the token timestamp
         setTokenTimeStamp(data);
+        // Redirect to the home page
         navigate(-1);
         } catch (err) {
         setErrors(err.response?.data || {});
         }
     };
-
+    // Handle form input changes
     const handleChange = (event) => {
         setSignInData({
           ...signInData,
