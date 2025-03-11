@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Login Test</title>
+</head>
+<body>
+    <h1>Test API Login</h1>
+    <form id="loginForm">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="lochy3">
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" value="lochlann123">
+        </div>
+        <button type="submit">Login</button>
+    </form>
+
+    <div id="result" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;"></div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const resultDiv = document.getElementById('result');
+            
+            resultDiv.innerHTML = 'Sending request...';
+            
+            try {
+                // First, get CSRF token
+                const csrfResponse = await fetch('https://eventify-back-d016873ba1b8.herokuapp.com/api/csrf/', {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+                
+                if (!csrfResponse.ok) {
+                    throw new Error('Failed to get CSRF token');
+                }
+                
+                resultDiv.innerHTML += '<br>CSRF token fetch successful';
+                
+                // Now try login
+                const loginResponse = await fetch('https://eventify-back-d016873ba1b8.herokuapp.com/api/auth/login/', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const loginData = await loginResponse.json();
+                
+                if (!loginResponse.ok) {
+                    throw new Error(JSON.stringify(loginData));
+                }
+                
+                resultDiv.innerHTML += '<br>Login successful: ' + JSON.stringify(loginData);
+                
+                // Check cookies
+                resultDiv.innerHTML += '<br><br>Cookies now set in browser: ' + document.cookie;
+                
+                // Try to get user data
+                const userResponse = await fetch('https://eventify-back-d016873ba1b8.herokuapp.com/api/auth/user/', {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+                
+                const userData = await userResponse.json();
+                
+                if (!userResponse.ok) {
+                    throw new Error(JSON.stringify(userData));
+                }
+                
+                resultDiv.innerHTML += '<br><br>User data: ' + JSON.stringify(userData);
+                
+            } catch (error) {
+                resultDiv.innerHTML += '<br><br>Error: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>

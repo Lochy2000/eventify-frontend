@@ -1,34 +1,60 @@
 // axiosDefaults.js
 import axios from 'axios';
 
-// Use environment-based URL when possible
+// Base URL config
 const BASE_URL = process.env.REACT_APP_API_URL || 'https://eventify-back-d016873ba1b8.herokuapp.com/api';
 
+// Create axios instance with config
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
-  timeout: 5000,
-  withCredentials: true, // ensures cookies are sent with requests
+  timeout: 10000, // 10 seconds
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   },
 });
 
-// Request interceptor to fetch CSRF token if needed
+// Request interceptor to add token to request headers
 axiosInstance.interceptors.request.use(
-  async (config) => {
-    // Only get CSRF token for non-GET methods
-    if (!['get', 'head', 'options'].includes(config.method)) {
-      try {
-        // Get CSRF cookie before the actual request
-        await axios.get(`${BASE_URL}/csrf/`, { withCredentials: true });
-      } catch (error) {
-        console.error('Error fetching CSRF token:', error);
-      }
+  (config) => {
+    // Get token from localStorage
+    const token = localStorage.getItem('authToken');
+    
+    // If token exists, add it to the headers
+    if (token) {
+      config.headers.Authorization = `Token ${token}`;
     }
+    
+    console.log(`Sending ${config.method?.toUpperCase() || 'GET'} request to: ${config.baseURL}${config.url}`);
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor for debugging
+axiosInstance.interceptors.response.use(
+  (response) => {
+    console.log('Response received:', response.status);
+    return response;
+  },
+  (error) => {
+    console.error('Response error:', error.response?.status, error.message);
+    
+    // If 401 Unauthorized, clear local storage and refresh
+    if (error.response?.status === 401) {
+      if (localStorage.getItem('authToken')) {
+        console.log('Token expired or invalid, logging out...');
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('user');
+        // Optional: redirect to login
+        // window.location.href = '/signin';
+      }
+    }
+    
+    return Promise.reject(error);
+  }
 );
 
 export default axiosInstance;

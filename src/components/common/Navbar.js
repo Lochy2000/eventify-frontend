@@ -2,9 +2,7 @@ import React from "react";
 import { Navbar as BootstrapNavbar, Container, Nav, Button } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { useCurrentUser, useSetCurrentUser } from "../../contexts/CurrentUserContext";
-//
 import axiosInstance from "../../api/axiosDefaults";
-import { removeTokenTimeStamp } from "../../utils/utils";
 import { useClickOutsideToggle } from "../../hooks/useClickOutsideToggle";
 import styles from "../../styles/NavBar.module.css";
 
@@ -19,20 +17,25 @@ const NavBar = () => {
   const handleSignOut = async () => {
     try {
       console.log("Logging out...");
-      // First, get a CSRF token (needed for POST requests)
-      await axiosInstance.get("/csrf/");
       
-      // Send a POST request to the backend
+      // Clear token and user data from localStorage
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('user');
+      
+      // Set current user to null
+      setCurrentUser(null);
+      
+      // Send logout request to server (optional)
       await axiosInstance.post("/auth/logout/");
       console.log("Logout successful");
       
-      // Set the current user to null
-      setCurrentUser(null);
-      
-      // Clear any local storage items if needed
-      removeTokenTimeStamp();
+      // Refresh the page
+      window.location.href = "/";
     } catch (error) {
       console.error("Logout error:", error);
+      // Even if server logout fails, clear user session on frontend
+      setCurrentUser(null);
+      window.location.href = "/";
     }
   };
 

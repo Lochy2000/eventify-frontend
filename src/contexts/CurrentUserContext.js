@@ -18,13 +18,35 @@ export const CurrentUserProvider = ({ children }) => {
 
   const handleMount = async () => {
     try {
-      // Try to fetch the current user using cookies
-      const { data } = await axiosInstance.get("/auth/user/");
-      console.log("Current user fetched:", data);
-      setCurrentUser(data);
+      // Check if we have a user in localStorage
+      const storedUser = localStorage.getItem('user');
+      const token = localStorage.getItem('authToken');
+      
+      if (storedUser && token) {
+        // If we have stored user data, use it
+        setCurrentUser(JSON.parse(storedUser));
+        
+        // Verify the user data with the server in the background
+        try {
+          const { data } = await axiosInstance.get("/auth/user/");
+          setCurrentUser(data);
+          localStorage.setItem('user', JSON.stringify(data));
+        } catch (serverErr) {
+          // If token is invalid, clear storage
+          console.log('Stored token invalid, clearing user data');
+          localStorage.removeItem('authToken');
+          localStorage.removeItem('user');
+          setCurrentUser(null);
+        }
+      } else {
+        // No stored user, set to null
+        setCurrentUser(null);
+      }
     } catch (err) {
-      // If token is invalid or no user is logged in, just clear the state
-      console.log("No user session found or session expired");
+      // If any error occurs during user verification, clear everything
+      console.error("Error in user authentication:", err);
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('user');
       setCurrentUser(null);
     }
   };

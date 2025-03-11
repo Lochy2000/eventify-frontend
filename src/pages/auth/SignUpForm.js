@@ -54,16 +54,15 @@ const SignUpForm = () => {
                 username: signUpData.username,
                 password: "[FILTERED]"
             });
-
-            // First, get a CSRF token
-            await axiosInstance.get("/csrf/");
             
             // Send a POST request to the backend
             const signupResponse = await axiosInstance.post("/auth/registration/", signUpData);
-            console.log("Registration successful", signupResponse);
+            console.log("Registration successful", signupResponse.data);
             
-            // If successful, redirect to sign in page
-            navigate("/signin");
+            // If successful, redirect to sign in page with success message
+            navigate("/signin", { 
+                state: { message: "Registration successful! Please sign in with your new account." } 
+            });
         } catch (error) {
             // Handle validation errors
             console.error("Registration error:", error.response?.data || error);
