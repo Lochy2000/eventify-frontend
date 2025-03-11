@@ -1,3 +1,12 @@
+---
+name: User Story
+about: Create a new user story for the Eventify project
+title: 'USER STORY: <TITLE>'
+labels: 'user story'
+assignees: ''
+
+---
+
 ## User Story Title
 
 As a **[user type]**, I want to **[perform some action]** so that **[I can achieve some goal/benefit/value]**.
