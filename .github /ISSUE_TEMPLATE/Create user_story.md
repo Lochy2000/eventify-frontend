@@ -1,0 +1,17 @@
+## User Story Title
+
+As a **[user type]**, I want to **[perform some action]** so that **[I can achieve some goal/benefit/value]**.
+
+### Acceptance Criteria
+- [ ] Criterion 1
+- [ ] Criterion 2
+- [ ] Criterion 3
+- [ ] Criterion 4
+
+### Tasks
+- [ ] Task 1
+- [ ] Task 2
+- [ ] Task 3
+
+
+### Priority: [Must Have | Should Have | Could Have | Won't Have]
