@@ -231,3 +231,4 @@ This section details the steps needed to deploy the Eventify frontend.
 
 ## Backend API
 The frontend application consumes data from the Eventify Django REST API. For more information about the backend, please visit the backend repository.
+https://github.com/Lochy2000/eventify-django 

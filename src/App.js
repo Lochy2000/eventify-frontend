@@ -6,6 +6,7 @@ import NavBar from './components/common/NavBar';
 
 import SignInForm from './pages/auth/SignInForm';
 import SignUpForm from './pages/auth/SignUpForm';
+import ProfilePage from './pages/ProfilePage';
 
 import Footer from './components/common/Footer';
 //context provider
@@ -17,7 +18,7 @@ const EventsPage = () => <div className="container py-4"><h1>Events Page</h1></d
 const FavouritesPage = () => <div className="container py-4"><h1>Favourites Page</h1></div>;
 const EventCreatePage = () => <div className="container py-4"><h1>Create Event Page</h1></div>;
 const EventDetailPage = () => <div className="container py-4"><h1>Event Detail Page</h1></div>;
-const ProfilePage = () => <div className="container py-4"><h1>Profile Page</h1></div>;
+// ProfilePage component has been imported
 const NotFoundPage = () => <div className="container py-4"><h1>404 - Not Found</h1></div>;
 
 

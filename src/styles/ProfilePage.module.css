@@ -1,0 +1,23 @@
+.ProfileTabs {
+  margin-bottom: 20px;
+}
+
+.ProfileTabs .nav-link {
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.ProfileTabs .nav-link.active {
+  color: #198754; /* Bootstrap success color */
+  font-weight: 600;
+}
+
+.TabContent {
+  min-height: 200px;
+}
+
+.NoContent {
+  text-align: center;
+  padding: 50px 0;
+  color: #6c757d;
+}
