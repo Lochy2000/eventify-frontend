@@ -1,32 +1,31 @@
 import { createContext, useContext, useEffect, useState, useMemo } from "react";
-import axiosInstance from "../services/api";
+import axiosInstance from "../api/axiosDefaults";
 import { useNavigate } from "react-router-dom";
 import { removeTokenTimeStamp, shouldRefreshToken } from "../utils/utils";
 
+// Create context to store the current user and set current user
 export const CurrentUserContext = createContext();
 export const SetCurrentUserContext = createContext();
 
+// Custom hooks to use the current user and set current user
 export const useCurrentUser = () => useContext(CurrentUserContext);
 export const useSetCurrentUser = () => useContext(SetCurrentUserContext);
 
+// Provider component to wrap the app and provide the current user
 export const CurrentUserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
 
   const handleMount = async () => {
     try {
-      // Check if we have a token in localStorage
-      const token = localStorage.getItem('accessToken');
-      if (token) {
-        // Fetch the current user data
-        const { data } = await axiosInstance.get("/auth/user/");
-        setCurrentUser(data);
-      }
+      // Try to fetch the current user using cookies
+      const { data } = await axiosInstance.get("/auth/user/");
+      console.log("Current user fetched:", data);
+      setCurrentUser(data);
     } catch (err) {
-      // If token is invalid, clear everything
-      console.error(err);
-      localStorage.removeItem('accessToken');
-      removeTokenTimeStamp();
+      // If token is invalid or no user is logged in, just clear the state
+      console.log("No user session found or session expired");
+      setCurrentUser(null);
     }
   };
 
@@ -34,28 +33,29 @@ export const CurrentUserProvider = ({ children }) => {
     handleMount();
   }, []);
 
-  useMemo(() => {
-    // Check if token needs refreshing
+    // Set up token refresh interval
+  useEffect(() => {
+    // Skip if no user is logged in
+    if (!currentUser) return;
+    
+    // Function to refresh the token
     const refreshToken = async () => {
       try {
-        if (shouldRefreshToken()) {
-          const { data } = await axiosInstance.post("/auth/token/refresh/");
-          if (data.access) {
-            localStorage.setItem('accessToken', data.access);
-          }
-        }
+        // Try to refresh the token
+        await axiosInstance.post("/auth/token/refresh/");
+        console.log("Token refreshed successfully");
       } catch (err) {
+        console.error("Token refresh failed:", err);
         // If refresh fails, log out user
         setCurrentUser(null);
-        removeTokenTimeStamp();
-        localStorage.removeItem('accessToken');
         navigate("/signin");
       }
     };
 
-    const interval = setInterval(refreshToken, 5 * 60 * 1000); // Check every 5 minutes
+    // Set interval to refresh token every 55 minutes (tokens last 60 minutes)
+    const interval = setInterval(refreshToken, 55 * 60 * 1000);
     return () => clearInterval(interval);
-  }, [navigate]);
+  }, [currentUser, navigate]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

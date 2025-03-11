@@ -9,7 +9,7 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
 
-import axiosInstance from "../../services/api";
+import axiosInstance from "../../api/axiosDefaults";
 import { useRedirect } from "../../hooks/useRedirect";
 import styles from "../../styles/AuthForms.module.css";
 
@@ -21,11 +21,18 @@ const SignUpForm = () => {
         password1: "",
         password2: "",
     });
+
+    // Destructure the sign up data state
     const {username, password1, password2} = signUpData;
+
+    // State to store loading state
+    const [loading, setLoading] = useState(false);
     // State to store validation errors
+
     const [errors, setErrors] = useState({});
     // Use the navigate hook to redirect to the sign in page
     const navigate = useNavigate();
+
     // Handle form input changes
     const handleChange = (event) => {
         // Update the sign up data state
@@ -40,20 +47,34 @@ const SignUpForm = () => {
     // Handle form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setLoading(true);
+        setErrors({});
         try {
+            console.log("Sending registration request with:", {
+                username: signUpData.username,
+                password: "[FILTERED]"
+            });
+
+            // First, get a CSRF token
+            await axiosInstance.get("/csrf/");
+            
             // Send a POST request to the backend
-            const response = await axiosInstance.post("/auth/registration/", signUpData);
-            //If successful, redirect to sign in page
+            const signupResponse = await axiosInstance.post("/auth/registration/", signUpData);
+            console.log("Registration successful", signupResponse);
+            
+            // If successful, redirect to sign in page
             navigate("/signin");
-        } catch (error) 
-        {   // Handle validation errors
+        } catch (error) {
+            // Handle validation errors
+            console.error("Registration error:", error.response?.data || error);
             if (error.response) {
                 setErrors(error.response.data);
             } else {
                 // Handle other errors
-                console.error("Error during registration:", error);
                 setErrors({ non_field_errors: ["Connection error. Please try again."] });
             }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -119,8 +140,9 @@ const SignUpForm = () => {
                             <Button
                             className="w-100 mt-3 bg-success"
                             type="submit"
+                            disabled={loading}
                             >
-                            Sign up
+                            {loading ? "Signing up..." : "Sign up"}
                             </Button>
                             {errors.non_field_errors?.map((message, idx) => (
                             <Alert key={idx} variant="warning" className="mt-3">
