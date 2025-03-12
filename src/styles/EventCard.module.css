@@ -1,0 +1,75 @@
+.Event {
+  background-color: #ffffff;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.Event:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.Title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 8px 0;
+}
+
+.Location {
+  font-size: 0.9rem;
+  color: #555555;
+  margin-bottom: 8px;
+}
+
+.Category {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.CategoryBadge {
+  background-color: #f1f1f1;
+  border-radius: 15px;
+  padding: 2px 10px;
+  font-size: 0.8rem;
+  color: #333333;
+}
+
+.Price {
+  font-weight: bold;
+  color: #444444;
+}
+
+.FreeEvent {
+  font-weight: bold;
+  color: #28a745;
+}
+
+.Description {
+  margin-bottom: 8px;
+  color: #555555;
+  font-size: 0.9rem;
+}
+
+.EventStats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #777777;
+  padding-top: 8px;
+  border-top: 1px solid #eeeeee;
+}
+
+.EditButton {
+  background: none;
+  border: none;
+  color: #6c757d;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.EditButton:hover {
+  color: #007bff;
+}
