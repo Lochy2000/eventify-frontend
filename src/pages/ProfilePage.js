@@ -43,12 +43,15 @@ const ProfilePage = () => {
     fetchProfile();
   }, [username]);
 
+  // Handle follow/unfollow actions
   const handleFollow = async (profileId) => {
     try {
+      // Create a new follower relationship
       const { data } = await axiosInstance.post('/followers/', {
         followed: profileId
       });
       
+      // Update this profile's UI to show following
       setProfile(prevProfile => ({
         ...prevProfile,
         followers_count: prevProfile.followers_count + 1,
@@ -63,6 +66,7 @@ const ProfilePage = () => {
     try {
       await axiosInstance.delete(`/followers/${followingId}/`);
       
+      // Update this profile's UI to show not following
       setProfile(prevProfile => ({
         ...prevProfile,
         followers_count: prevProfile.followers_count - 1,
