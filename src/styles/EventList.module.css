@@ -1,0 +1,18 @@
+.EventListContainer {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.SearchBar {
+  border-radius: 20px;
+  padding-left: 40px;
+  position: relative;
+}
+
+.SearchIcon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+}
