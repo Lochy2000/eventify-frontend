@@ -1,0 +1,33 @@
+.ProfileCard {
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.ProfileCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.Avatar {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border: 2px solid #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ProfileLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.ProfileLink:hover {
+  color: #198754;  /* Bootstrap success color */
+}
+
+.FollowButton {
+  min-width: 100px;
+}
