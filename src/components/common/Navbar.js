@@ -60,13 +60,14 @@ const NavBar = () => {
       >
         Create Event
       </NavLink>
+      {/* Favorites removed - users can access through profile */}
       <NavLink
         className={({ isActive }) => 
           `${styles.NavLink} ${isActive ? styles.Active : ""}`
         }
-        to="/favourites"
+        to="/people"
       >
-        Favourites
+        People
       </NavLink>
       <NavLink
         className={({ isActive }) => 
