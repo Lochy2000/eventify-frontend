@@ -7,6 +7,7 @@ import NavBar from './components/common/NavBar';
 import SignInForm from './pages/auth/SignInForm';
 import SignUpForm from './pages/auth/SignUpForm';
 import ProfilePage from './pages/ProfilePage';
+import PeoplePage from './pages/PeoplePage';
 
 import Footer from './components/common/Footer';
 //context provider
@@ -37,7 +38,7 @@ function App() {
                 <Route path="/events/create" element={<EventCreatePage />} />
                 <Route path="/events/:id" element={<EventDetailPage />} />
                 <Route path="/profile/:username" element={<ProfilePage />} />
-                <Route path="/favourites" element={<FavouritesPage />} />
+                <Route path="/people" element={<PeoplePage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </main>
