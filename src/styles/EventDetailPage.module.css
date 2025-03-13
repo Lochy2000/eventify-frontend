@@ -1,0 +1,41 @@
+.EventDetailPage {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.AttendeesCard {
+  margin-bottom: 16px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.AttendeesBody {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.Attendee {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.Attendee:last-child {
+  border-bottom: none;
+}
+
+.AttendeeInfo {
+  margin-left: 10px;
+}
+
+.AttendeeName {
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.AttendeeDate {
+  font-size: 0.8rem;
+  color: #6c757d;
+  margin-bottom: 0;
+}
