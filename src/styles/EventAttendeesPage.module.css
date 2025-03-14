@@ -1,0 +1,22 @@
+.EventAttendeesPage {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.AttendeeItem {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.AttendeeLink {
+  display: flex;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.AttendeeLink:hover {
+  text-decoration: none;
+  color: inherit;
+}
