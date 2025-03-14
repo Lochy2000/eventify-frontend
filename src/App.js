@@ -8,17 +8,17 @@ import SignInForm from './pages/auth/SignInForm';
 import SignUpForm from './pages/auth/SignUpForm';
 import ProfilePage from './pages/ProfilePage';
 import PeoplePage from './pages/PeoplePage';
+import { EventsPage, EventDetailPage, EventCreatePage, EventEditPage, EventAttendeesPage } from './pages/events';
 
 import Footer from './components/common/Footer';
 //context provider
 import { CurrentUserProvider } from './contexts/CurrentUserContext';
 
-// Page imports placeholders
+// Page imports
 const HomePage = () => <div className="container py-4"><h1>Home Page</h1></div>;
-const EventsPage = () => <div className="container py-4"><h1>Events Page</h1></div>;
-const FavouritesPage = () => <div className="container py-4"><h1>Favourites Page</h1></div>;
-const EventCreatePage = () => <div className="container py-4"><h1>Create Event Page</h1></div>;
-const EventDetailPage = () => <div className="container py-4"><h1>Event Detail Page</h1></div>;
+
+// Import our event pages
+
 // ProfilePage component has been imported
 const NotFoundPage = () => <div className="container py-4"><h1>404 - Not Found</h1></div>;
 
@@ -37,6 +37,12 @@ function App() {
                 <Route path="/events" element={<EventsPage />} />
                 <Route path="/events/create" element={<EventCreatePage />} />
                 <Route path="/events/:id" element={<EventDetailPage />} />
+                <Route path="/events/:id/edit" element={<EventEditPage />} />
+                <Route path="/events/:id/attendees" element={<EventAttendeesPage />} />
+                {/* These routes all use the same EventsPage component but with different filters */}
+                <Route path="/myevents" element={<EventsPage />} />
+                <Route path="/attending" element={<EventsPage />} />
+                <Route path="/favorites" element={<EventsPage />} />
                 <Route path="/profile/:username" element={<ProfilePage />} />
                 <Route path="/people" element={<PeoplePage />} />
                 <Route path="*" element={<NotFoundPage />} />
