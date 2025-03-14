@@ -1,0 +1,11 @@
+.EventCreatePage {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.FormContainer {
+  background-color: white;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
