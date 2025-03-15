@@ -53,7 +53,7 @@ const EventAttendButton = ({ eventId, attendanceId, setEvent }) => {
 
   return (
     <Button
-      className={attendanceId ? 'btn-danger' : 'btn-success'}
+      variant={attendanceId ? 'danger' : 'success'}
       onClick={handleAttendance}
       disabled={isRegistering}
     >
