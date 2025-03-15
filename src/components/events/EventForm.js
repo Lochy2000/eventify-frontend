@@ -43,6 +43,9 @@ const EventForm = ({ event }) => {
       const formattedDate = eventDate.toISOString().split('T')[0];
       const formattedTime = eventDate.toTimeString().slice(0, 5);
 
+      console.log('Event data:', event);
+      console.log('Cover URL:', event.cover);
+
       setEventData({
         title: event.title,
         description: event.description,
@@ -68,10 +71,30 @@ const EventForm = ({ event }) => {
   // Handle image upload
   const handleChangeImage = (e) => {
     if (e.target.files.length) {
-      URL.revokeObjectURL(cover);
+      const selectedFile = e.target.files[0];
+      
+      // Basic validation
+      if (!selectedFile.type.startsWith('image/')) {
+        alert('Please select an image file');
+        return;
+      }
+      
+      // Size limit (10MB)
+      if (selectedFile.size > 10 * 1024 * 1024) {
+        alert('Image size should be less than 10MB');
+        return;
+      }
+      
+      // Revoke previous object URL to avoid memory leaks
+      if (cover && cover.startsWith('blob:')) {
+        URL.revokeObjectURL(cover);
+      }
+      
+      // Create object URL for preview
+      const imageUrl = URL.createObjectURL(selectedFile);
       setEventData({
         ...eventData,
-        cover: URL.createObjectURL(e.target.files[0]),
+        cover: imageUrl,
       });
     }
   };
@@ -94,12 +117,37 @@ const EventForm = ({ event }) => {
     formData.append('category', category);
     formData.append('price', price);
 
-    // Only append image if it's a new file (not a URL)
+    // Handle image upload
     if (imageInput?.current?.files[0]) {
-      formData.append('cover', imageInput.current.files[0]);
+      const imageFile = imageInput.current.files[0];
+      
+      // Basic validation
+      if (!imageFile.type.startsWith('image/')) {
+        setErrors({ cover: ['Please select a valid image file'] });
+        setIsSubmitting(false);
+        return;
+      }
+      
+      // Size limit check (10MB)
+      if (imageFile.size > 10 * 1024 * 1024) {
+        setErrors({ cover: ['Image size should be less than 10MB'] });
+        setIsSubmitting(false);
+        return;
+      }
+      
+      // Explicitly add the file with the original File type
+      const file = imageInput.current.files[0];
+      formData.append('cover', file, file.name);
+      console.log('Image file appended to FormData:', file.name, file.type, file.size);
+    } else if (isEditMode && !imageInput?.current?.files[0] && cover.startsWith('http')) {
+      // For edit mode, if no new file is selected but we have an existing cover URL,
+      // don't include the cover field to keep the existing image
     }
 
+
+
     try {
+      // Do NOT set Content-Type header - axios will set it automatically for FormData
       if (isEditMode) {
         // Update existing event
         await axiosInstance.put(`/events/${event.id}/`, formData);
@@ -116,7 +164,22 @@ const EventForm = ({ event }) => {
     } catch (err) {
       console.error('Error submitting event form:', err);
       if (err.response?.data) {
-        setErrors(err.response.data);
+        // Handle both array and object error formats
+        const errorData = err.response.data;
+        const formattedErrors = {};
+        
+        // Iterate through all keys in the error response
+        Object.keys(errorData).forEach(key => {
+          // If the error is an array, use it directly
+          if (Array.isArray(errorData[key])) {
+            formattedErrors[key] = errorData[key];
+          } else {
+            // If it's not an array, convert it to one
+            formattedErrors[key] = [errorData[key].toString()];
+          }
+        });
+        
+        setErrors(formattedErrors);
       } else {
         setErrors({ non_field_errors: ['An error occurred. Please try again.'] });
       }
@@ -275,6 +338,13 @@ const EventForm = ({ event }) => {
             {/* Image Upload */}
             <Form.Group controlId="cover" className={styles.ImageUpload}>
               <Form.Label>Event Image</Form.Label>
+              {errors.cover && (
+                <Alert variant="danger">
+                  {errors.cover.map((error, i) => (
+                    <p key={i}>{error}</p>
+                  ))}
+                </Alert>
+              )}
               {cover ? (
                 <div className={styles.ImagePreview}>
                   <Image className={styles.Image} src={cover} rounded />
