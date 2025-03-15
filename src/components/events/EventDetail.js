@@ -63,6 +63,9 @@ const EventDetail = ({ event, setEvent, setEvents }) => {
     }
   };
 
+  // Log the image URL for debugging
+  console.log('Event cover URL:', cover);
+
   return (
     <Card className={styles.EventDetail}>
       <Card.Body>
@@ -109,9 +112,12 @@ const EventDetail = ({ event, setEvent, setEvents }) => {
       </Card.Body>
       
       <Card.Img 
-        src={cover} 
+        src={cover || 'https://res.cloudinary.com/dpw2txejq/image/upload/v1/default_post_o0lbny'} 
         alt={title} 
-        className={styles.EventImage} 
+        className={styles.EventImage}
+        onError={(e) => {
+          e.target.src = 'https://res.cloudinary.com/dpw2txejq/image/upload/v1/default_post_o0lbny';
+        }}
       />
       
       <Card.Body>
