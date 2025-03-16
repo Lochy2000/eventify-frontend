@@ -116,12 +116,13 @@ const EventCard = ({ event }) => {
       
       <Link to={`/events/${id}`}>
         <Card.Img 
-          src={cover || 'https://res.cloudinary.com/dpw2txejq/image/upload/v1/default_post_o0lbny'} 
+          src={cover || 'https://res.cloudinary.com/dpw2txejq/image/upload/default_post_o0lbny'} 
           alt={title} 
           height="200"
           style={{ objectFit: 'cover' }}
           onError={(e) => {
-            e.target.src = 'https://res.cloudinary.com/dpw2txejq/image/upload/v1/default_post_o0lbny';
+            console.log(`Error loading event cover: ${cover}`);
+            e.target.src = 'https://res.cloudinary.com/dpw2txejq/image/upload/default_post_o0lbny';
           }}
         />
       </Link>
