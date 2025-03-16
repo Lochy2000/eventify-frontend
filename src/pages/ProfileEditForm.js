@@ -82,6 +82,10 @@ const ProfileEditForm = () => {
     // Only add the avatar if it's a file (not a string URL)
     if (profileData.avatar && typeof profileData.avatar !== 'string') {
       formData.append('avatar', profileData.avatar);
+      console.log('Adding avatar file to form data', profileData.avatar.name);
+    } else {
+      // Log to help debug if avatar is a string or missing
+      console.log('Avatar is a string or undefined:', profileData.avatar);
     }
     
     formData.append('name', profileData.name);
@@ -98,9 +102,23 @@ const ProfileEditForm = () => {
         throw new Error('Profile not found');
       }
       
+      // Add more debug logging
+      console.log('Updating profile with ID:', profile.id);
+      console.log('FormData entries:');
+      for (let [key, value] of formData.entries()) {
+        if (key === 'avatar' && value instanceof File) {
+          console.log(`${key}: ${value.name} (${value.type}, ${value.size} bytes)`);
+        } else {
+          console.log(`${key}: ${value}`);
+        }
+      }
+      
       // Update the profile
-      await axiosInstance.put(`/profiles/${profile.id}/`, formData);
-      navigate(`/profile/${username}`);
+      const response = await axiosInstance.put(`/profiles/${profile.id}/`, formData);
+      console.log('Profile update response:', response.data);
+      
+      // Force a reload to make sure we get fresh data
+      window.location.href = `/profile/${username}`;
     } catch (err) {
       console.error('Error updating profile:', err);
       setErrors(err.response?.data || { message: 'Error updating profile' });
