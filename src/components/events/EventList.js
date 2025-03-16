@@ -27,13 +27,16 @@ const EventList = ({ message, filter = "" }) => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const { data } = await axiosInstance.get(
-          `/events/?${filter}search=${query}&category=${category}`
-        );
+        // Log the request URL for debugging
+        const requestUrl = `/events/?${filter}search=${query}&category=${category}`;
+        console.log('Fetching events with URL:', requestUrl);
+        
+        const { data } = await axiosInstance.get(requestUrl);
+        console.log('Received events data:', data);
         setEvents(data);
         setHasLoaded(true);
       } catch (err) {
-        console.error(err);
+        console.error('Error fetching events:', err);
       }
     };
 
