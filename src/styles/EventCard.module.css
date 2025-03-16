@@ -62,14 +62,35 @@
   border-top: 1px solid #eeeeee;
 }
 
-.EditButton {
+.EditButton, .DeleteButton {
   background: none;
   border: none;
-  color: #6c757d;
   cursor: pointer;
-  padding: 4px;
+  padding: 4px 8px;
+  margin-left: 5px;
+  border-radius: 4px;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.EditButton {
+  color: #007bff;
+  background-color: rgba(0, 123, 255, 0.1);
 }
 
 .EditButton:hover {
-  color: #007bff;
+  color: #fff;
+  background-color: #007bff;
+}
+
+.DeleteButton {
+  color: #dc3545;
+  background-color: rgba(220, 53, 69, 0.1);
+}
+
+.DeleteButton:hover {
+  color: #fff;
+  background-color: #dc3545;
 }
