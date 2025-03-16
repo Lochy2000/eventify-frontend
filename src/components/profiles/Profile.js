@@ -10,7 +10,8 @@ const Profile = (props) => {
     name,
     bio, 
     location,
-    avatar, 
+    avatar,
+    avatar_url, 
     is_owner, 
     followers_count, 
     following_count,
@@ -25,12 +26,12 @@ const Profile = (props) => {
         <Row className="align-items-center mb-4">
           <Col xs={12} md={3} className="text-center">
             <Image 
-              src={avatar} 
+              src={avatar_url} 
               alt={`${owner}'s profile`} 
               roundedCircle 
               className={styles.ProfileAvatar} 
               onError={(e) => {
-                console.log(`Error loading profile image: ${avatar}`);
+                console.log(`Error loading profile image: ${avatar_url}`);
                 // Set a default image on error
                 e.target.src = 'https://res.cloudinary.com/dpw2txejq/image/upload/default_profile_ju9xum';
               }}
