@@ -35,7 +35,8 @@ const ProfileEditForm = () => {
             location: profile.location || '',
             avatar: profile.avatar || '',
           });
-          setImagePreview(profile.avatar);
+          // Use avatar_url instead of avatar for the preview
+          setImagePreview(profile.avatar_url);
           setLoading(false);
         } else {
           setErrors({ message: 'Profile not found' });
@@ -79,13 +80,27 @@ const ProfileEditForm = () => {
     event.preventDefault();
     const formData = new FormData();
     
-    // Only add the avatar if it's a file (not a string URL)
-    if (profileData.avatar && typeof profileData.avatar !== 'string') {
-      formData.append('avatar', profileData.avatar);
-      console.log('Adding avatar file to form data', profileData.avatar.name);
-    } else {
-      // Log to help debug if avatar is a string or missing
-      console.log('Avatar is a string or undefined:', profileData.avatar);
+    // Handle the avatar field
+    if (imageInputRef?.current?.files[0]) {
+      const imageFile = imageInputRef.current.files[0];
+      
+      // Basic validation
+      if (!imageFile.type.startsWith('image/')) {
+        setErrors({ avatar: ['Please select a valid image file'] });
+        setLoading(false);
+        return;
+      }
+      
+      // Size limit check (10MB)
+      if (imageFile.size > 10 * 1024 * 1024) {
+        setErrors({ avatar: ['Image size should be less than 10MB'] });
+        setLoading(false);
+        return;
+      }
+      
+      // Explicitly add the file with the original File type
+      formData.append('avatar', imageFile, imageFile.name);
+      console.log('Image file appended to FormData:', imageFile.name, imageFile.type, imageFile.size);
     }
     
     formData.append('name', profileData.name);
