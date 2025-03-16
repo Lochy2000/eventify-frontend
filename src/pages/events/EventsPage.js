@@ -32,12 +32,12 @@ const EventsPage = () => {
 
   // Determine filter string based on URL
   const getFilterString = () => {
-    if (pathname === '/favorites') {
+    if (pathname === '/favorites' && currentUser) {
       return 'favorite=true&'; 
-    } else if (pathname === '/attending') {
+    } else if (pathname === '/attending' && currentUser) {
       return 'attending=true&';
-    } else if (pathname === '/myevents') {
-      return `owner=${currentUser?.username}&`;
+    } else if (pathname === '/myevents' && currentUser) {
+      return `owner__username=${currentUser?.username}&`;
     } else {
       return '';
     }
