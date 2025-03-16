@@ -13,28 +13,31 @@ const Avatar = ({ src, height = 45, text }) => {
   // Add console log for debugging avatar URLs
   console.log(`Avatar src for ${text}:`, src);
   
+  // Set a default avatar URL if src is undefined or empty
+  const avatarSrc = src || 'https://res.cloudinary.com/dpw2txejq/image/upload/default_profile_ju9xum';
+  
   return (
     <span className={styles.AvatarContainer}>
-      {src && (
-        <img
-          className={styles.Avatar}
-          src={src}
-          height={height}
-          width={height}
-          alt="Avatar"
-          onError={(e) => {
-            console.error('Error loading avatar image:', e);
-            e.target.style.display = 'none';
-          }}
-        />
-      )}
+      <img
+        className={styles.Avatar}
+        src={avatarSrc}
+        height={height}
+        width={height}
+        alt="Avatar"
+        onError={(e) => {
+          console.error(`Error loading avatar image for ${text}:`, e.target.src);
+          // Fall back to initials if image fails to load
+          e.target.style.display = 'none';
+        }}
+      />
       <div
         className={styles.AvatarText}
         style={{
           height,
           width: height,
-          display: src ? 'none' : 'flex'
+          display: 'flex' // Always create the element but it might be hidden by the image
         }}
+        data-testid="avatar-initials"
       >
         {text?.slice(0, 2).toUpperCase() || '?'}
       </div>
