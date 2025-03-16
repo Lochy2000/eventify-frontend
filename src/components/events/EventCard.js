@@ -1,6 +1,7 @@
-import React from 'react';
-import { Card, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Card, OverlayTrigger, Tooltip, Modal, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
+import axiosInstance from '../../api/axiosDefaults';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Avatar from '../common/Avatar';
 import styles from '../../styles/EventCard.module.css';
@@ -30,6 +31,20 @@ const EventCard = ({ event }) => {
   const currentUser = useCurrentUser();
   const navigate = useNavigate();
   const isOwner = currentUser?.username === owner;
+  
+  // State for delete confirmation modal
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  // Function to handle event deletion
+  const handleDelete = async () => {
+    try {
+      await axiosInstance.delete(`/events/${id}/`);
+      // Redirect to events page or refresh the current page
+      navigate('/events');
+    } catch (err) {
+      console.error('Error deleting event:', err);
+    }
+  };
 
   // Format the event date for display
   const eventDate = new Date(date);
@@ -47,24 +62,57 @@ const EventCard = ({ event }) => {
             <span>{owner}</span>
           </Link>
           <div className="d-flex align-items-center">
-            <span>{formattedDate}</span>
+            <span className="me-2">{formattedDate}</span>
             {isOwner && (
-              <OverlayTrigger
-                placement="top"
-                overlay={<Tooltip>Edit event</Tooltip>}
-              >
-                <button
-                  className={styles.EditButton}
-                  onClick={() => navigate(`/events/${id}/edit`)}
-                  aria-label="Edit event"
+              <>
+                <OverlayTrigger
+                  placement="top"
+                  overlay={<Tooltip>Edit event</Tooltip>}
                 >
-                  <i className="fas fa-edit" />
-                </button>
-              </OverlayTrigger>
+                  <button
+                    className={styles.EditButton}
+                    onClick={() => navigate(`/events/${id}/edit`)}
+                    aria-label="Edit event"
+                  >
+                    <i className="fas fa-edit" />
+                  </button>
+                </OverlayTrigger>
+                
+                <OverlayTrigger
+                  placement="top"
+                  overlay={<Tooltip>Delete event</Tooltip>}
+                >
+                  <button
+                    className={styles.DeleteButton}
+                    onClick={() => setShowDeleteModal(true)}
+                    aria-label="Delete event"
+                  >
+                    <i className="fas fa-trash" />
+                  </button>
+                </OverlayTrigger>
+              </>
             )}
           </div>
         </div>
       </Card.Body>
+      
+      {/* Delete confirmation modal */}
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Event</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete <strong>{title}</strong>? This action cannot be undone.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Delete Event
+          </Button>
+        </Modal.Footer>
+      </Modal>
       
       <Link to={`/events/${id}`}>
         <Card.Img 
