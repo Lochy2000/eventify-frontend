@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Spinner, Button, Nav } from 'react-bootstrap';
+import { Container, Row, Col, Spinner, Button, Nav, Card } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import Profile from '../components/profiles/Profile';
+import EventCard from '../components/events/EventCard';
 import axiosInstance from '../api/axiosDefaults';
 import { useCurrentUser } from '../contexts/CurrentUserContext';
 import Alert from 'react-bootstrap/Alert';
+import Asset from '../components/common/Asset';
 import styles from '../styles/ProfilePage.module.css';
 
 const ProfilePage = () => {
@@ -14,9 +16,20 @@ const ProfilePage = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('events');
+  
+  // State for each tab content
+  const [userEvents, setUserEvents] = useState({ results: [] });
+  const [attendingEvents, setAttendingEvents] = useState({ results: [] });
+  const [favoriteEvents, setFavoriteEvents] = useState({ results: [] });
+  
+  // Loading states for each tab
+  const [eventsLoading, setEventsLoading] = useState(true);
+  const [attendingLoading, setAttendingLoading] = useState(true);
+  const [favoritesLoading, setFavoritesLoading] = useState(true);
 
   const isOwner = currentUser?.username === username;
 
+  // Fetch profile data
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -41,6 +54,101 @@ const ProfilePage = () => {
     };
 
     fetchProfile();
+  }, [username]);
+  
+  // Fetch events created by the user
+  useEffect(() => {
+    const fetchUserEvents = async () => {
+      if (!username) return;
+      
+      try {
+        setEventsLoading(true);
+        const { data } = await axiosInstance.get(`/events/?owner__username=${username}`);
+        setUserEvents(data);
+      } catch (err) {
+        console.error('Error fetching user events:', err);
+      } finally {
+        setEventsLoading(false);
+      }
+    };
+    
+    fetchUserEvents();
+  }, [username]);
+  
+  // Fetch events the user is attending
+  useEffect(() => {
+    const fetchAttendingEvents = async () => {
+      if (!username) return;
+      
+      try {
+        setAttendingLoading(true);
+        // First get the user's event attendances
+        const { data: attendances } = await axiosInstance.get(`/attendees/?owner__username=${username}`);
+        
+        if (attendances.results.length > 0) {
+          // Extract event IDs from attendances
+          const eventIds = attendances.results.map(attendance => attendance.event);
+          
+          // Get events by IDs
+          const promises = eventIds.map(eventId => 
+            axiosInstance.get(`/events/${eventId}/`)
+          );
+          
+          const eventsResponses = await Promise.all(promises);
+          const events = {
+            results: eventsResponses.map(response => response.data)
+          };
+          
+          setAttendingEvents(events);
+        } else {
+          setAttendingEvents({ results: [] });
+        }
+      } catch (err) {
+        console.error('Error fetching attending events:', err);
+      } finally {
+        setAttendingLoading(false);
+      }
+    };
+    
+    fetchAttendingEvents();
+  }, [username]);
+  
+  // Fetch events the user has favorited
+  useEffect(() => {
+    const fetchFavoriteEvents = async () => {
+      if (!username) return;
+      
+      try {
+        setFavoritesLoading(true);
+        // First get the user's favorites
+        const { data: favorites } = await axiosInstance.get(`/favorites/?owner__username=${username}`);
+        
+        if (favorites.results.length > 0) {
+          // Extract event IDs from favorites
+          const eventIds = favorites.results.map(favorite => favorite.event);
+          
+          // Get events by IDs
+          const promises = eventIds.map(eventId => 
+            axiosInstance.get(`/events/${eventId}/`)
+          );
+          
+          const eventsResponses = await Promise.all(promises);
+          const events = {
+            results: eventsResponses.map(response => response.data)
+          };
+          
+          setFavoriteEvents(events);
+        } else {
+          setFavoriteEvents({ results: [] });
+        }
+      } catch (err) {
+        console.error('Error fetching favorite events:', err);
+      } finally {
+        setFavoritesLoading(false);
+      }
+    };
+    
+    fetchFavoriteEvents();
   }, [username]);
 
   // Handle follow/unfollow actions
@@ -134,22 +242,64 @@ const ProfilePage = () => {
             </Nav.Item>
           </Nav>
           
-          {/* Content based on selected tab - placeholder for now */}
+          {/* Content based on selected tab */}
           <div className="p-3 bg-light rounded">
             {activeTab === 'events' && (
-              <p className="text-muted text-center py-5">
-                {isOwner ? "You haven't created any events yet" : `${profile.owner} hasn't created any events yet`}
-              </p>
+              <>
+                {eventsLoading ? (
+                  <Asset spinner />
+                ) : userEvents.results.length ? (
+                  <Row>
+                    {userEvents.results.map(event => (
+                      <Col md={6} lg={4} key={event.id} className="mb-4">
+                        <EventCard event={event} />
+                      </Col>
+                    ))}
+                  </Row>
+                ) : (
+                  <p className="text-muted text-center py-5">
+                    {isOwner ? "You haven't created any events yet" : `${profile.owner} hasn't created any events yet`}
+                  </p>
+                )}
+              </>
             )}
             {activeTab === 'attending' && (
-              <p className="text-muted text-center py-5">
-                {isOwner ? "You're not attending any events yet" : `${profile.owner} isn't attending any events yet`}
-              </p>
+              <>
+                {attendingLoading ? (
+                  <Asset spinner />
+                ) : attendingEvents.results.length ? (
+                  <Row>
+                    {attendingEvents.results.map(event => (
+                      <Col md={6} lg={4} key={event.id} className="mb-4">
+                        <EventCard event={event} />
+                      </Col>
+                    ))}
+                  </Row>
+                ) : (
+                  <p className="text-muted text-center py-5">
+                    {isOwner ? "You're not attending any events yet" : `${profile.owner} isn't attending any events yet`}
+                  </p>
+                )}
+              </>
             )}
             {activeTab === 'favorites' && (
-              <p className="text-muted text-center py-5">
-                {isOwner ? "You haven't favorited any events yet" : `${profile.owner} hasn't favorited any events yet`}
-              </p>
+              <>
+                {favoritesLoading ? (
+                  <Asset spinner />
+                ) : favoriteEvents.results.length ? (
+                  <Row>
+                    {favoriteEvents.results.map(event => (
+                      <Col md={6} lg={4} key={event.id} className="mb-4">
+                        <EventCard event={event} />
+                      </Col>
+                    ))}
+                  </Row>
+                ) : (
+                  <p className="text-muted text-center py-5">
+                    {isOwner ? "You haven't favorited any events yet" : `${profile.owner} hasn't favorited any events yet`}
+                  </p>
+                )}
+              </>
             )}
           </div>
         </Col>
