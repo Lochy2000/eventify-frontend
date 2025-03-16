@@ -29,6 +29,11 @@ const Profile = (props) => {
               alt={`${owner}'s profile`} 
               roundedCircle 
               className={styles.ProfileAvatar} 
+              onError={(e) => {
+                console.log(`Error loading profile image: ${avatar}`);
+                // Set a default image on error
+                e.target.src = 'https://res.cloudinary.com/dpw2txejq/image/upload/default_profile_ju9xum';
+              }}
             />
           </Col>
           <Col xs={12} md={9}>
