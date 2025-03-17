@@ -58,7 +58,7 @@ const EventCard = ({ event }) => {
       <Card.Body>
         <div className="d-flex align-items-center justify-content-between">
           <Link to={`/profile/${owner}`} className="d-flex align-items-center">
-            <Avatar src={event.profile_image} height={40} text={owner} />
+            <Avatar src={event.profile_image || event.avatar_url} height={40} text={owner} />
             <span>{owner}</span>
           </Link>
           <div className="d-flex align-items-center">
