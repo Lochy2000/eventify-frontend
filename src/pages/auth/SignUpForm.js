@@ -12,6 +12,7 @@ import Alert from "react-bootstrap/Alert";
 import axiosInstance from "../../api/axiosDefaults";
 import { useRedirect } from "../../hooks/useRedirect";
 import styles from "../../styles/AuthForms.module.css";
+import { getHomepageImage } from "../../utils/cloudinaryHelper";
 
 // Sign up form component
 const SignUpForm = () => {
@@ -163,7 +164,7 @@ const SignUpForm = () => {
             >
                 <Image
                 className="img-fluid"
-                src="/images/signup.jpg"
+                src={getHomepageImage('signup_afhigf.jpg')}
                 alt="Sign Up"
                 />
             </Col>

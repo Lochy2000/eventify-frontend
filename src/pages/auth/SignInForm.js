@@ -13,6 +13,7 @@ import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 import { useRedirect } from "../../hooks/useRedirect";
 import styles from "../../styles/AuthForms.module.css";
 import axiosInstance from "../../api/axiosDefaults";
+import { getHomepageImage } from "../../utils/cloudinaryHelper";
 
 const SigninForm = () => {
   // Redirect the user if they are already logged in
@@ -170,7 +171,7 @@ const SigninForm = () => {
       >
         <Image
           className="img-fluid"
-          src="/images/signin.jpg"
+          src={getHomepageImage('signin_gwzqdj')}
           alt="Sign In"
         />
       </Col>

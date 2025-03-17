@@ -4,6 +4,8 @@ import { NavLink } from 'react-router-dom';
 import { useCurrentUser, useSetCurrentUser } from '../../contexts/CurrentUserContext';
 import styles from '../../styles/NavBar.module.css';
 import { useClickOutsideToggle } from '../../hooks/useClickOutsideToggle';
+import { getHomepageImage } from '../../utils/cloudinaryHelper';
+
 
 /**
  * Navigation bar component for the application
@@ -96,7 +98,7 @@ const NavBar = () => {
       <Container>
         <Navbar.Brand className={styles.NavBrand} href="/">
           <img
-            src="/assets/images/logo.jpg"
+            src={getHomepageImage('logo_sc94ub.jpg')}
             height="30"
             className="d-inline-block align-top me-2"
             alt="Eventify Logo"

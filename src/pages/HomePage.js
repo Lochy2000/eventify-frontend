@@ -3,6 +3,7 @@ import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useCurrentUser } from '../contexts/CurrentUserContext';
 import styles from '../styles/HomePage.module.css';
+import { getHomepageImage } from '../utils/cloudinaryHelper';
 
 /**
  * Landing page component for the application
@@ -20,7 +21,7 @@ const HomePage = () => {
           <Row className="align-items-center">
             <Col md={6} className="text-center text-md-start">
               <img 
-                src="/assets/images/logo.jpg" 
+                src={getHomepageImage('logo_sc94ub.jpg')} 
                 alt="Eventify Logo" 
                 className={styles.HeroLogo}
               />
@@ -66,8 +67,8 @@ const HomePage = () => {
             </Col>
             <Col md={6} className="mt-4 mt-md-0">
               <img 
-                src="/assets/images/calender.jpg" 
-                alt="Event Calendar" 
+                src={getHomepageImage('people_xzad7b.png')} 
+                alt="Event Peopl" 
                 className={styles.HeroImage}
               />
             </Col>
@@ -85,8 +86,8 @@ const HomePage = () => {
                 <Card.Body className="text-center">
                   <div className={styles.FeatureIcon}>
                     <img 
-                      src="/assets/images/people.png" 
-                      alt="Connect Icon" 
+                      src={getHomepageImage('calender_gpibzw.png')} 
+                      alt="Connect Calendar" 
                       height="80"
                     />
                   </div>
@@ -102,7 +103,7 @@ const HomePage = () => {
                 <Card.Body className="text-center">
                   <div className={styles.FeatureIcon}>
                     <img 
-                      src="/assets/images/fistbump.gif" 
+                      src={getHomepageImage('fistbump_ibozaq.gif')} 
                       alt="Experience Icon" 
                       height="80"
                     />
@@ -119,7 +120,7 @@ const HomePage = () => {
                 <Card.Body className="text-center">
                   <div className={styles.FeatureIcon}>
                     <img 
-                      src="/assets/images/stars gif.gif" 
+                      src={getHomepageImage('stars_f4e64m.gif')} 
                       alt="Discover Icon" 
                       height="80"
                     />
