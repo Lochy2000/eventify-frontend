@@ -9,6 +9,7 @@ const ProfileCard = ({ profile, handleFollow, handleUnfollow }) => {
     owner,
     name,
     avatar,
+    avatar_url,
     location,
     following_id,
   } = profile;
@@ -18,10 +19,15 @@ const ProfileCard = ({ profile, handleFollow, handleUnfollow }) => {
       <Card.Body className="text-center p-3">
         <Link to={`/profile/${owner}`} className={styles.ProfileLink}>
           <Image 
-            src={avatar} 
+            src={avatar_url} 
             alt={`${owner}'s profile`} 
             roundedCircle 
             className={styles.Avatar}
+            onError={(e) => {
+              console.log(`Error loading profile image in card: ${avatar_url}`);
+              // Set a default image on error
+              e.target.src = 'https://res.cloudinary.com/dpw2txejq/image/upload/default_profile_ju9xum';
+            }}
           />
           
           <Card.Title className="mt-3 mb-1">
