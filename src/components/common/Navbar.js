@@ -1,85 +1,58 @@
-import React from "react";
-import { Navbar as BootstrapNavbar, Container, Nav, Button } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
-import { useCurrentUser, useSetCurrentUser } from "../../contexts/CurrentUserContext";
-import axiosInstance from "../../api/axiosDefaults";
-import { useClickOutsideToggle } from "../../hooks/useClickOutsideToggle";
-import styles from "../../styles/NavBar.module.css";
+import React from 'react';
+import { Navbar, Container, Nav, Button } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
+import { useCurrentUser, useSetCurrentUser } from '../../contexts/CurrentUserContext';
+import styles from '../../styles/NavBar.module.css';
+import { useClickOutsideToggle } from '../../hooks/useClickOutsideToggle';
 
-// Navbar component
+/**
+ * Navigation bar component for the application
+ */
 const NavBar = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
 
+  // Custom hook for mobile navbar toggle
   const { expanded, setExpanded, ref } = useClickOutsideToggle();
-  
-  // Handle sign out
+
+  // Handle user logout
   const handleSignOut = async () => {
     try {
-      console.log("Logging out...");
-      
-      // Clear token and user data from localStorage
       localStorage.removeItem('authToken');
+      localStorage.removeItem('refreshToken');
       localStorage.removeItem('user');
-      
-      // Set current user to null
       setCurrentUser(null);
-      
-      // Send logout request to server (optional)
-      await axiosInstance.post("/auth/logout/");
-      console.log("Logout successful");
-      
-      // Refresh the page
-      window.location.href = "/";
-    } catch (error) {
-      console.error("Logout error:", error);
-      // Even if server logout fails, clear user session on frontend
-      setCurrentUser(null);
-      window.location.href = "/";
+    } catch (err) {
+      console.error('Error signing out:', err);
     }
   };
-
-  // Logged in links
-  const loggedInLinks = (
+  
+  // Navigation links for logged-in users
+  const loggedInIcons = (
     <>
       <NavLink
-      // Add the isActive prop to the NavLink component
-        className={({ isActive }) =>
-          `${styles.NavLink} ${isActive ? styles.Active : ""}`
-        }
+        className={styles.NavLink}
         to="/events"
       >
-        Events
+        Discover
       </NavLink>
-      <NavLink
       
-        className={({ isActive }) => 
-          `${styles.NavLink} ${isActive ? styles.Active : ""}`
-        }
-        to="/events/create"
-      >
-        Create Event
-      </NavLink>
-      {/* Favorites removed - users can access through profile */}
       <NavLink
-        className={({ isActive }) => 
-          `${styles.NavLink} ${isActive ? styles.Active : ""}`
-        }
+        className={styles.NavLink}
         to="/people"
       >
         People
       </NavLink>
+      
       <NavLink
-        className={({ isActive }) => 
-          `${styles.NavLink} ${isActive ? styles.Active : ""}`
-        }
+        className={styles.NavLink}
         to={`/profile/${currentUser?.username}`}
       >
         Profile
       </NavLink>
-      <Button 
-        className="ms-2 btn-sm"
-        variant="outline-secondary" 
+      
+      <Button
+        className={styles.NavLink}
         onClick={handleSignOut}
       >
         Sign Out
@@ -87,28 +60,25 @@ const NavBar = () => {
     </>
   );
   
-  const loggedOutLinks = (
+  // Navigation links for logged-out users
+  const loggedOutIcons = (
     <>
       <NavLink
-        className={({ isActive }) =>
-          `${styles.NavLink} ${isActive ? styles.Active : ""}`
-        }
+        className={styles.NavLink}
         to="/events"
       >
-        Events
+        Discover
       </NavLink>
+      
       <NavLink
-        className={({ isActive }) =>
-          `${styles.NavLink} ${isActive ? styles.Active : ""}`
-        }
+        className={styles.NavLink}
         to="/signin"
       >
         Sign In
       </NavLink>
+      
       <NavLink
-        className={({ isActive }) =>
-          `${styles.NavLink} ${isActive ? styles.Active : ""}`
-        }
+        className={styles.NavLink}
         to="/signup"
       >
         Sign Up
@@ -117,28 +87,44 @@ const NavBar = () => {
   );
 
   return (
-    <BootstrapNavbar
+    <Navbar
       expanded={expanded}
       className={styles.NavBar}
       expand="md"
       fixed="top"
     >
       <Container>
-        <NavLink to="/" className={styles.Logo}>
-          <BootstrapNavbar.Brand className="text-success fw-bold">eventify</BootstrapNavbar.Brand>
-        </NavLink>
-        <BootstrapNavbar.Toggle
+        <Navbar.Brand className={styles.NavBrand} href="/">
+          <img
+            src="/assets/images/logo.jpg"
+            height="30"
+            className="d-inline-block align-top me-2"
+            alt="Eventify Logo"
+          />
+          Eventify
+        </Navbar.Brand>
+        
+        <Navbar.Toggle
           ref={ref}
           onClick={() => setExpanded(!expanded)}
           aria-controls="basic-navbar-nav"
         />
-        <BootstrapNavbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
-            {currentUser ? loggedInLinks : loggedOutLinks}
+        
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto text-left">
+            <NavLink
+              className={styles.NavLink}
+              to="/"
+            >
+              Home
+            </NavLink>
+            
+            {currentUser ? loggedInIcons : loggedOutIcons}
           </Nav>
-        </BootstrapNavbar.Collapse>
+        </Navbar.Collapse>
       </Container>
-    </BootstrapNavbar>
+    </Navbar>
   );
 };
+
 export default NavBar;
