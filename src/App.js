@@ -3,12 +3,18 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Import components using index files
-import { NavBar, Footer } from './components/common';
+import NavBar from './components/common/NavBar';
+import Footer from './components/common/Footer';
 
 
 // Import pages
-import { SignInForm, SignUpForm } from './pages/auth';
-import { EventsPage, EventDetailPage, EventCreatePage, EventEditPage, EventAttendeesPage } from './pages/events';
+import SignInForm from './pages/auth/SignInForm';
+import SignUpForm from './pages/auth/SignUpForm';
+import EventsPage from './pages/events/EventsPage';
+import EventDetailPage from './pages/events/EventDetailPage';
+import EventCreatePage from './pages/events/EventCreatePage';
+import EventEditPage from './pages/events/EventEditPage';
+import EventAttendeesPage from './pages/events/EventAttendeesPage';
 import ProfilePage from './pages/ProfilePage';
 import ProfileEditForm from './pages/ProfileEditForm';
 import PeoplePage from './pages/PeoplePage';
