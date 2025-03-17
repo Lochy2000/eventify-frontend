@@ -1,0 +1,21 @@
+.CommentSection {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e9ecef;
+}
+
+.CommentList {
+  margin-top: 16px;
+}
+
+.CommentItem {
+  padding: 8px 0;
+  border: none;
+}
+
+@media (max-width: 576px) {
+  .CommentSection {
+    margin-top: 24px;
+    padding-top: 16px;
+  }
+}
