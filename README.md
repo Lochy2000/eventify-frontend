@@ -28,7 +28,7 @@ Eventify is a full-stack event management platform that allows users to create, 
 
 The platform enables users to browse events, create their own events, register for events, and interact with other users through comments, follows, and a favorites system.
 
-![Homepage Screenshot](./public/assets/images/readme/homepage.png)
+![Homepage Screenshot](public/assets/images/readme/homepage.png)
 
 ## Project Goals
 The main goal of this project is to create a user-friendly event management platform where:
@@ -78,22 +78,22 @@ The project is built around addressing specific user needs, represented by the f
 These wireframes were created during the planning phase to visualize the user interface and experience:
 
 1. **Event Creation Form**  
-   ![Create Event Form](./public/assets/images/wireframes/desktop/createevent.png)
+   ![Create Event Form](public/assets/images/wireframes/desktop/createevent.png)
 
 2. **Event Details Page**  
-   ![Event Details](./public/assets/images/wireframes/desktop/details.png)
+   ![Event Details](public/assets/images/wireframes/desktop/details.png)
 
 3. **Sign Up & Profile Pages**  
-   ![Sign Up & Profile Pages](./public/assets/images/wireframes/desktop/signup&profile.png)
+   ![Sign Up & Profile Pages](public/assets/images/wireframes/desktop/signup&profile.png)
 
 #### Mobile Wireframes
 The application is designed to be fully responsive with a mobile-first approach:
 
 1. **Mobile View of Events**  
-   ![Mobile View](./public/assets/images/wireframes/mobile/mobileView.png)
+   ![Mobile View](public/assets/images/wireframes/mobile/mobileView.png)
 
 2. **Mobile Search Interface**  
-   ![Mobile Search](./public/assets/images/wireframes/mobile/search.png)
+   ![Mobile Search](public/assets/images/wireframes/mobile/search.png)
 
 ### Design Choices
 The design of Eventify emphasizes clarity, usability, and responsive layout:
@@ -112,23 +112,23 @@ The design of Eventify emphasizes clarity, usability, and responsive layout:
   - Protected routes for authenticated users
   - Form validation to ensure data integrity
 
-  ![Sign In Form](./public/assets/images/readme/signedIn.png)
-  ![Sign Out View](./public/assets/images/readme/signedOut.png)
+  ![Sign In Form](public/assets/images/readme/signedIn.png)
+  ![Sign Out View](public/assets/images/readme/signedOut.png)
 
 - **Event Management**
   - Create events with details like title, description, date, location, category, and cover image
   - Edit and delete events
   - View event attendees
 
-  ![Event Creation Form](./public/assets/images/readme/eventCreate.png)
-  ![Event Attendees](./public/assets/images/readme/attendees.png)
+  ![Event Creation Form](public/assets/images/readme/eventCreate.png)
+  ![Event Attendees](public/assets/images/readme/attendees.png)
 
 - **Event Discovery**
   - Browse all events
   - Search events by keywords
   - Filter events by category
 
-  ![Filter Create Search](./public/assets/images/readme/FilterCreateSearch.png)
+  ![Filter Create Search](public/assets/images/readme/FilterCreateSearch.png)
 
 - **Event Interaction**
   - Register for events
@@ -136,7 +136,7 @@ The design of Eventify emphasizes clarity, usability, and responsive layout:
   - Favorite events for later reference
   - Comment on events
 
-  ![Comments on Events](./public/assets/images/readme/comments.png)
+  ![Comments on Events](public/assets/images/readme/comments.png)
 
 - **User Profiles**
   - View and edit personal profile
@@ -145,15 +145,15 @@ The design of Eventify emphasizes clarity, usability, and responsive layout:
   - See events a user is attending
   - See events a user has favorited
 
-  ![User Profile](./public/assets/images/readme/profile.png)
-  ![Edit Profile](./public/assets/images/readme/editprofile.png)
+  ![User Profile](public/assets/images/readme/profile.png)
+  ![Edit Profile](public/assets/images/readme/editprofile.png)
 
 - **Social Features**
   - Follow/unfollow other users
   - Browse users on the platform
   - Search for users by name or username
 
-  ![User Search](./public/assets/images/readme/users.png)
+  ![User Search](public/assets/images/readme/users.png)
 
 ### Future Features
 - Advanced filtering and sorting options for events
@@ -487,10 +487,10 @@ Code quality and validation were important priorities for this project:
   - Resolved unused variables and imports
   - Custom rules to allow certain patterns common in React development
 
-  ![Form Validation](./public/assets/images/readme/validation.png)
+  ![Form Validation](public/assets/images/readme/validation.png)
 
 - **Test Results**
-  ![Test Results](./public/assets/images/readme/test-results.png)
+  ![Test Results](public/assets/images/readme/test-results.png)
 
 - **Responsive Design Testing**
   - Tested on multiple device sizes to ensure responsive layout
