@@ -10,7 +10,7 @@ const ProfileCard = ({ profile, handleFollow, handleUnfollow }) => {
     owner,
     name,
     // avatar is provided but not used directly - we use avatar_url instead
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line no-unused-vars
     avatar,
     avatar_url,
     location,

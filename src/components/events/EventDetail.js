@@ -35,7 +35,7 @@ const EventDetail = ({ event, setEvent, setEvents }) => {
     favorite_id,
     created_at,
     // updated_at value extracted but not used - kept for structure completeness
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line no-unused-vars
     updated_at,
     is_owner,
   } = event;

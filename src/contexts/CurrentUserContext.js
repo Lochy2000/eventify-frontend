@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axiosInstance from "../api/axiosDefaults";
 import { useNavigate } from "react-router-dom";
 // Importing these utility functions for token handling (not used in this version)
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// eslint-disable-next-line no-unused-vars
 import { removeTokenTimeStamp, shouldRefreshToken } from "../utils/utils";
 
 // Create context to store the current user and set current user
