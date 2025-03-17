@@ -1,7 +1,6 @@
-// Disable ESLint for test files
-/* eslint-disable */
+import { render, screen } from '@testing-library/react';
+import App from './App';
 
-// Simple test to verify the testing setup
-test('basic test passes', () => {
-  expect(true).toBe(true);
+test('renders app component', () => {
+  render(<App />);
 });

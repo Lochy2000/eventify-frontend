@@ -2,12 +2,11 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// Import components using index files
+// Import components with correct relative paths
 import NavBar from './components/common/NavBar';
 import Footer from './components/common/Footer';
 
-
-// Import pages
+// Import pages with correct relative paths
 import SignInForm from './pages/auth/SignInForm';
 import SignUpForm from './pages/auth/SignUpForm';
 import EventsPage from './pages/events/EventsPage';
