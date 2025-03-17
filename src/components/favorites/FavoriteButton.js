@@ -76,6 +76,10 @@ const FavoriteButton = ({ eventId, favoriteId, setEvent, setEvents }) => {
           }));
         }
       }
+      
+      // Refresh the page to ensure UI is updated
+      window.location.reload();
+      
     } catch (err) {
       console.error('Error toggling favorite:', err);
     } finally {
