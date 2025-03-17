@@ -7,7 +7,7 @@ import NavBar from './components/common/NavBar';
 import Footer from './components/common/Footer';
 
 // Import pages with correct paths
-import SignInForm from './pages/auth/SignInForm';
+import SigninForm from './pages/auth/SignInForm';
 import SignUpForm from './pages/auth/SignUpForm';
 import EventsPage from './pages/events/EventsPage';
 import EventDetailPage from './pages/events/EventDetailPage';
@@ -35,7 +35,7 @@ function App() {
             <main className="flex-grow-1 " style={{ paddingTop: "70px" }}>
               <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/signin" element={<SignInForm />} />
+                <Route path="/signin" element={<SigninForm />} />
                 <Route path="/signup" element={<SignUpForm />} />
                 <Route path="/events" element={<EventsPage />} />
                 <Route path="/events/create" element={<EventCreatePage />} />
