@@ -5,6 +5,7 @@
 2. [Project Goals](#project-goals)
 3. [UX Design](#ux-design)
    - [User Stories](#user-stories)
+   - [Wireframes](#wireframes)
    - [Design Choices](#design-choices)
 4. [Features](#features)
    - [Existing Features](#existing-features)
@@ -26,6 +27,8 @@
 Eventify is a full-stack event management platform that allows users to create, discover, and register for events. This repository contains the frontend React application that consumes the Eventify Django REST API.
 
 The platform enables users to browse events, create their own events, register for events, and interact with other users through comments, follows, and a favorites system.
+
+![Homepage Screenshot](./public/assets/images/readme/homepage.png)
 
 ## Project Goals
 The main goal of this project is to create a user-friendly event management platform where:
@@ -69,6 +72,29 @@ The project is built around addressing specific user needs, represented by the f
 19. As a user, I want to follow other users to stay updated on their events
 20. As a user, I want to see profiles of other users on the platform
 
+### Wireframes
+
+#### Desktop Wireframes
+These wireframes were created during the planning phase to visualize the user interface and experience:
+
+1. **Event Creation Form**  
+   ![Create Event Form](./public/assets/images/wireframes/desktop/createevent.png)
+
+2. **Event Details Page**  
+   ![Event Details](./public/assets/images/wireframes/desktop/details.png)
+
+3. **Sign Up & Profile Pages**  
+   ![Sign Up & Profile Pages](./public/assets/images/wireframes/desktop/signup&profile.png)
+
+#### Mobile Wireframes
+The application is designed to be fully responsive with a mobile-first approach:
+
+1. **Mobile View of Events**  
+   ![Mobile View](./public/assets/images/wireframes/mobile/mobileView.png)
+
+2. **Mobile Search Interface**  
+   ![Mobile Search](./public/assets/images/wireframes/mobile/search.png)
+
 ### Design Choices
 The design of Eventify emphasizes clarity, usability, and responsive layout:
 
@@ -84,22 +110,33 @@ The design of Eventify emphasizes clarity, usability, and responsive layout:
 - **User Authentication**
   - Sign up, sign in, and sign out functionality
   - Protected routes for authenticated users
+  - Form validation to ensure data integrity
+
+  ![Sign In Form](./public/assets/images/readme/signedIn.png)
+  ![Sign Out View](./public/assets/images/readme/signedOut.png)
 
 - **Event Management**
   - Create events with details like title, description, date, location, category, and cover image
   - Edit and delete events
   - View event attendees
 
+  ![Event Creation Form](./public/assets/images/readme/eventCreate.png)
+  ![Event Attendees](./public/assets/images/readme/attendees.png)
+
 - **Event Discovery**
   - Browse all events
   - Search events by keywords
   - Filter events by category
+
+  ![Filter Create Search](./public/assets/images/readme/FilterCreateSearch.png)
 
 - **Event Interaction**
   - Register for events
   - Cancel event registration
   - Favorite events for later reference
   - Comment on events
+
+  ![Comments on Events](./public/assets/images/readme/comments.png)
 
 - **User Profiles**
   - View and edit personal profile
@@ -108,9 +145,15 @@ The design of Eventify emphasizes clarity, usability, and responsive layout:
   - See events a user is attending
   - See events a user has favorited
 
+  ![User Profile](./public/assets/images/readme/profile.png)
+  ![Edit Profile](./public/assets/images/readme/editprofile.png)
+
 - **Social Features**
   - Follow/unfollow other users
   - Browse users on the platform
+  - Search for users by name or username
+
+  ![User Search](./public/assets/images/readme/users.png)
 
 ### Future Features
 - Advanced filtering and sorting options for events
@@ -444,6 +487,11 @@ Code quality and validation were important priorities for this project:
   - Resolved unused variables and imports
   - Custom rules to allow certain patterns common in React development
 
+  ![Form Validation](./public/assets/images/readme/validation.png)
+
+- **Test Results**
+  ![Test Results](./public/assets/images/readme/test-results.png)
+
 - **Responsive Design Testing**
   - Tested on multiple device sizes to ensure responsive layout
   - Bootstrap breakpoints used consistently
@@ -453,7 +501,7 @@ Code quality and validation were important priorities for this project:
   - Ensured consistent behavior across browsers
 
 ## Deployment
-The frontend application is deployed on Heroku.
+The frontend application is deployed on Heroku. You can access the live application at [https://eventify-react-ff1e525f1dc0.herokuapp.com/](https://eventify-react-ff1e525f1dc0.herokuapp.com/).
 
 ### Local Deployment
 1. Clone this repository:
@@ -498,7 +546,9 @@ The application is deployed to Heroku using the following steps:
 ## Backend API
 The frontend application consumes data from the Eventify Django REST API.
 For more information about the backend, please visit the backend repository:
-https://github.com/yourusername/eventify-django
+https://github.com/KWSNick/eventify-django
+
+The backend API is deployed at [https://eventify-back-d016873ba1b8.herokuapp.com/api](https://eventify-back-d016873ba1b8.herokuapp.com/api)
 
 The backend API provides the following main endpoints:
 
