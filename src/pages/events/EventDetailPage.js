@@ -7,6 +7,7 @@ import Asset from '../../components/common/Asset';
 import styles from '../../styles/EventDetailPage.module.css';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Avatar from '../../components/common/Avatar';
+import { CommentList } from '../../components/comments';
 
 /**
  * Page component for displaying a single event with its details and attendees
@@ -35,12 +36,14 @@ const EventDetailPage = () => {
             const { data: attendeesData } = await axiosInstance.get(`/events/${id}/attendees/`);
             setAttendees(attendeesData);
           } catch (attendeesErr) {
+            // Using console.error is appropriate for actual errors
             console.error('Error fetching attendees:', attendeesErr);
           }
         }
 
         setHasLoaded(true);
       } catch (err) {
+        // Using console.error is appropriate for actual errors
         console.error('Error fetching event details:', err);
         setError("Event not found or you don't have permission to view it.");
         setHasLoaded(true);
@@ -63,6 +66,15 @@ const EventDetailPage = () => {
                 event={event.results[0]}
                 setEvent={setEvent}
               />
+              
+              {/* Comments section */}
+              <div className="mt-4">
+                <CommentList 
+                  eventId={id} 
+                  event={event} 
+                  setEvent={setEvent} 
+                />
+              </div>
             </Col>
             
             <Col md={4}>
