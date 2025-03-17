@@ -45,6 +45,9 @@ const ProfilePage = () => {
         } else {
           setError('Profile not found');
         }
+
+        // Set document title with the username
+        document.title = `${username}'s Profile | Eventify`;
       } catch (err) {
         console.error('Error fetching profile:', err);
         setError('An error occurred while fetching the profile');
@@ -82,7 +85,7 @@ const ProfilePage = () => {
       
       try {
         setAttendingLoading(true);
-        // First get the user's event attendances
+        // Now our backend supports filtering by owner__username
         const { data: attendances } = await axiosInstance.get(`/attendees/?owner__username=${username}`);
         
         if (attendances.results.length > 0) {
@@ -120,7 +123,7 @@ const ProfilePage = () => {
       
       try {
         setFavoritesLoading(true);
-        // First get the user's favorites
+        // Get the user's favorites - this endpoint supports filtering by owner
         const { data: favorites } = await axiosInstance.get(`/favorites/?owner__username=${username}`);
         
         if (favorites.results.length > 0) {
