@@ -1,0 +1,94 @@
+/* HomePage.module.css */
+
+.HomePageContainer {
+  padding-top: 30px;
+}
+
+/* Hero Section Styles */
+.HeroSection {
+  padding: 60px 0;
+  background-color: #f8f9fa;
+  border-radius: 15px;
+  margin-bottom: 60px;
+}
+
+.HeroLogo {
+  height: 80px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.HeroTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.HeroSubtitle {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.HeroButtons {
+  margin-bottom: 30px;
+}
+
+.HeroImage {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Features Section Styles */
+.FeaturesSection {
+  padding: 60px 0;
+  background-color: #fff;
+  margin-bottom: 60px;
+}
+
+.FeatureCard {
+  height: 100%;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 10px;
+}
+
+.FeatureCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.FeatureIcon {
+  margin-bottom: 20px;
+}
+
+/* Call to Action Section Styles */
+.CtaSection {
+  padding: 80px 0;
+  background-color: #f8f9fa;
+  border-radius: 15px;
+  margin-bottom: 60px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .HeroTitle {
+    font-size: 2rem;
+  }
+
+  .HeroSubtitle {
+    font-size: 1rem;
+  }
+
+  .HeroSection,
+  .FeaturesSection,
+  .CtaSection {
+    padding: 40px 0;
+    margin-bottom: 40px;
+  }
+}
