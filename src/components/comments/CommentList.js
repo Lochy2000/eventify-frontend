@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { ListGroup } from 'react-bootstrap';
 import Comment from './Comment';
 import CommentForm from './CommentForm';
@@ -15,7 +16,7 @@ import styles from '../../styles/CommentList.module.css';
  * @param {Object} props.event - Event data
  * @param {Function} props.setEvent - Function to update parent event state
  */
-const CommentList = ({ eventId, event, setEvent }) => {
+const CommentList = ({ eventId, setEvent }) => {
   // State for comments data
   const [comments, setComments] = useState({ results: [] });
   const [loading, setLoading] = useState(true);
@@ -75,6 +76,11 @@ const CommentList = ({ eventId, event, setEvent }) => {
       )}
     </div>
   );
+};
+
+CommentList.propTypes = {
+  eventId: PropTypes.number.isRequired,
+  setEvent: PropTypes.func.isRequired,
 };
 
 export default CommentList;

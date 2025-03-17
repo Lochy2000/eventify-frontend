@@ -1,6 +1,9 @@
-import { createContext, useContext, useEffect, useState, useMemo } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import PropTypes from 'prop-types';
 import axiosInstance from "../api/axiosDefaults";
 import { useNavigate } from "react-router-dom";
+// Importing these utility functions for token handling (not used in this version)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { removeTokenTimeStamp, shouldRefreshToken } from "../utils/utils";
 
 // Create context to store the current user and set current user
@@ -31,9 +34,9 @@ export const CurrentUserProvider = ({ children }) => {
           const { data } = await axiosInstance.get("/auth/user/");
           setCurrentUser(data);
           localStorage.setItem('user', JSON.stringify(data));
-        } catch (serverErr) {
+        } catch (error) {
           // If token is invalid, clear storage
-          console.log('Stored token invalid, clearing user data');
+          console.log('Stored token invalid, clearing user data:', error.message);
           localStorage.removeItem('authToken');
           localStorage.removeItem('user');
           setCurrentUser(null);
@@ -86,4 +89,8 @@ export const CurrentUserProvider = ({ children }) => {
       </SetCurrentUserContext.Provider>
     </CurrentUserContext.Provider>
   );
+};
+
+CurrentUserProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };

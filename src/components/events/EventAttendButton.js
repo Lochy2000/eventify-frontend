@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import axiosInstance from '../../api/axiosDefaults';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
@@ -64,6 +65,12 @@ const EventAttendButton = ({ eventId, attendanceId, setEvent }) => {
       {isRegistering ? 'Processing...' : attendanceId ? 'Cancel Registration' : 'Register for Event'}
     </Button>
   );
+};
+
+EventAttendButton.propTypes = {
+  eventId: PropTypes.number.isRequired,
+  attendanceId: PropTypes.number,
+  setEvent: PropTypes.func.isRequired,
 };
 
 export default EventAttendButton;

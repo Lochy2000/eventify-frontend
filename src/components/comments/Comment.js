@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Card, OverlayTrigger, Tooltip, Modal, Button, Form, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../../api/axiosDefaults';
@@ -188,6 +189,18 @@ const Comment = ({ comment, setEvent, setComments }) => {
       </Modal>
     </Card>
   );
+};
+
+Comment.propTypes = {
+  comment: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    owner: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    created_at: PropTypes.string.isRequired,
+    profile_image: PropTypes.string,
+  }).isRequired,
+  setEvent: PropTypes.func.isRequired,
+  setComments: PropTypes.func.isRequired,
 };
 
 export default Comment;

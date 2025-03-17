@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Form, Button, Image, Container, Alert, Row, Col, Card } from 'react-bootstrap';
+import { Form, Button, Image, Container, Alert, Row, Col } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../api/axiosDefaults';
 import { useCurrentUser } from '../contexts/CurrentUserContext';
 import Asset from '../components/common/Asset';
-import appStyles from '../App.css';
+// We're not using appStyles but keeping it commented to show intent
+// import appStyles from '../App.css';
 
 const ProfileEditForm = () => {
   const { username } = useParams();

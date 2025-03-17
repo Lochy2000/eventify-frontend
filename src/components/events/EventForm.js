@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Form, Button, Row, Col, Container, Alert, Image } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../styles/EventForm.module.css';
@@ -415,3 +416,16 @@ const EventForm = ({ event }) => {
 };
 
 export default EventForm;
+
+EventForm.propTypes = {
+  event: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    cover: PropTypes.string,
+  }),
+};

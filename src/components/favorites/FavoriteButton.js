@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import axiosInstance from '../../api/axiosDefaults';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
@@ -99,6 +100,13 @@ const FavoriteButton = ({ eventId, favoriteId, setEvent, setEvents }) => {
       {favoriteId ? " Unfavorite" : " Favorite"}
     </Button>
   );
+};
+
+FavoriteButton.propTypes = {
+  eventId: PropTypes.number.isRequired,
+  favoriteId: PropTypes.number,
+  setEvent: PropTypes.func.isRequired,
+  setEvents: PropTypes.func,
 };
 
 export default FavoriteButton;

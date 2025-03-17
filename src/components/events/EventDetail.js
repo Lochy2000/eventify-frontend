@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Card, Button, OverlayTrigger, Tooltip, Badge, Row, Col } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
@@ -33,6 +34,8 @@ const EventDetail = ({ event, setEvent, setEvents }) => {
     attendance_id,
     favorite_id,
     created_at,
+    // updated_at value extracted but not used - kept for structure completeness
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     updated_at,
     is_owner,
   } = event;
@@ -199,3 +202,28 @@ const EventDetail = ({ event, setEvent, setEvents }) => {
 };
 
 export default EventDetail;
+
+EventDetail.propTypes = {
+  event: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    owner: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    cover: PropTypes.string,
+    description: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    likes_count: PropTypes.number,
+    comments_count: PropTypes.number,
+    attendees_count: PropTypes.number,
+    attendance_id: PropTypes.number,
+    favorite_id: PropTypes.number,
+    created_at: PropTypes.string.isRequired,
+    updated_at: PropTypes.string,
+    is_owner: PropTypes.bool.isRequired,
+    profile_image: PropTypes.string,
+  }).isRequired,
+  setEvent: PropTypes.func.isRequired,
+  setEvents: PropTypes.func.isRequired,
+};

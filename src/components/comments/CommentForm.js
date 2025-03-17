@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Form, Button, Alert } from 'react-bootstrap';
 import axiosInstance from '../../api/axiosDefaults';
 import styles from '../../styles/CommentForm.module.css';
@@ -89,6 +90,12 @@ const CommentForm = ({ eventId, setComments, setEvent }) => {
       </div>
     </Form>
   );
+};
+
+CommentForm.propTypes = {
+  eventId: PropTypes.number.isRequired,
+  setComments: PropTypes.func.isRequired,
+  setEvent: PropTypes.func.isRequired,
 };
 
 export default CommentForm;

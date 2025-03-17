@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Card, Button, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import styles from '../../styles/ProfileCard.module.css';
@@ -8,6 +9,8 @@ const ProfileCard = ({ profile, handleFollow, handleUnfollow }) => {
     id,
     owner,
     name,
+    // avatar is provided but not used directly - we use avatar_url instead
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     avatar,
     avatar_url,
     location,
@@ -70,3 +73,17 @@ const ProfileCard = ({ profile, handleFollow, handleUnfollow }) => {
 };
 
 export default ProfileCard;
+
+ProfileCard.propTypes = {
+  profile: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    owner: PropTypes.string.isRequired,
+    name: PropTypes.string,
+    avatar: PropTypes.string,
+    avatar_url: PropTypes.string,
+    location: PropTypes.string,
+    following_id: PropTypes.number,
+  }).isRequired,
+  handleFollow: PropTypes.func.isRequired,
+  handleUnfollow: PropTypes.func.isRequired,
+};

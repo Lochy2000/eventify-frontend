@@ -160,7 +160,7 @@ const SignInForm = () => {
         </Container>
         <Container className="mt-3 p-3 bg-white rounded shadow text-center">
           <Link className={styles.Link} to="/signup">
-            Don't have an account? <span>Sign up now!</span>
+            Don&apos;t have an account? <span>Sign up now!</span>
           </Link>
         </Container>
       </Col>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Spinner, Button, Nav, Card } from 'react-bootstrap';
+import { Container, Row, Col, Spinner, Nav } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import Profile from '../components/profiles/Profile';
 import EventCard from '../components/events/EventCard';

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import axiosInstance from '../../api/axiosDefaults';
@@ -132,3 +133,13 @@ const EventList = ({ message, filter = "" }) => {
 };
 
 export default EventList;
+
+EventList.propTypes = {
+  message: PropTypes.string,
+  filter: PropTypes.string,
+};
+
+EventList.defaultProps = {
+  message: "No events found. Try adjusting your search.",
+  filter: "",
+};

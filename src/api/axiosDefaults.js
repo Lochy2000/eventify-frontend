@@ -2,7 +2,8 @@
 import axios from 'axios';
 
 // Base URL config
-const BASE_URL = process.env.REACT_APP_API_URL || 'https://eventify-back-d016873ba1b8.herokuapp.com/api';
+// Use window.process to access environment variables in browsers
+const BASE_URL = (typeof window !== 'undefined' && window.process && window.process.env && window.process.env.REACT_APP_API_URL) || 'https://eventify-back-d016873ba1b8.herokuapp.com/api';
 
 // Create axios instance with config
 const axiosInstance = axios.create({

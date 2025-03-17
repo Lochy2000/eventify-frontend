@@ -1,0 +1,7 @@
+node_modules/
+build/
+public/
+*.test.js
+reportWebVitals.js
+setupTests.js
+src/test/

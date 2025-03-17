@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Card, OverlayTrigger, Tooltip, Modal, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../api/axiosDefaults';
@@ -166,6 +167,25 @@ const EventCard = ({ event }) => {
       </Card.Body>
     </Card>
   );
+};
+
+EventCard.propTypes = {
+  event: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    owner: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    cover: PropTypes.string,
+    description: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    likes_count: PropTypes.number,
+    comments_count: PropTypes.number,
+    attendees_count: PropTypes.number,
+    profile_image: PropTypes.string,
+    avatar_url: PropTypes.string,
+  }).isRequired,
 };
 
 export default EventCard;

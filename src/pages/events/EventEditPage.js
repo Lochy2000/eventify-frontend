@@ -72,7 +72,7 @@ const EventEditPage = () => {
             <EventForm event={event} />
           ) : !errors.message && (
             <Alert variant="warning">
-              You don't have permission to edit this event.
+              You don&apos;t have permission to edit this event.
             </Alert>
           )}
         </>

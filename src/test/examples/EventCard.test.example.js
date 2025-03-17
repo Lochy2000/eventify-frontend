@@ -1,3 +1,5 @@
+// Disable ESLint for example/test files
+/* eslint-disable */
 // Example test for EventCard component - NOT run automatically by Jest
 // This is for documentation purposes to demonstrate test structure
 

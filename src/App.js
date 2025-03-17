@@ -1,27 +1,23 @@
+import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// Component imports
-import NavBar from './components/common/NavBar';
-import TestImageUpload from './components/debug/TestImageUpload';
+// Import components using index files
+import { NavBar, Footer } from './components/common';
 
-import SignInForm from './pages/auth/SignInForm';
-import SignUpForm from './pages/auth/SignUpForm';
-import ProfilePage from './pages/ProfilePage';
-import PeoplePage from './pages/PeoplePage';
-import ProfileEditForm from './pages/ProfileEditForm';
+
+// Import pages
+import { SignInForm, SignUpForm } from './pages/auth';
 import { EventsPage, EventDetailPage, EventCreatePage, EventEditPage, EventAttendeesPage } from './pages/events';
+import ProfilePage from './pages/ProfilePage';
+import ProfileEditForm from './pages/ProfileEditForm';
+import PeoplePage from './pages/PeoplePage';
+import HomePage from './pages/HomePage';
 
-import Footer from './components/common/Footer';
-//context provider
+// Context provider
 import { CurrentUserProvider } from './contexts/CurrentUserContext';
 
-// Page imports
-const HomePage = () => <div className="container py-4"><h1>Home Page</h1></div>;
-
-// Import our event pages
-
-// ProfilePage component has been imported
+// Simple page component
 const NotFoundPage = () => <div className="container py-4"><h1>404 - Not Found</h1></div>;
 
 
@@ -48,7 +44,7 @@ function App() {
                 <Route path="/profile/:username" element={<ProfilePage />} />
                 <Route path="/profile/:username/edit" element={<ProfileEditForm />} />
                 <Route path="/people" element={<PeoplePage />} />
-                <Route path="/test-upload" element={<TestImageUpload />} />
+
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </main>

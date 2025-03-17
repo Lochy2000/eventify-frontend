@@ -1,5 +1,6 @@
 import React from 'react';
-import { Container, Row, Col, Image, Card, Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import { Row, Col, Image, Card, Button } from 'react-bootstrap';
 import styles from '../../styles/Profile.module.css';
 import { Link } from 'react-router-dom';
 
@@ -10,6 +11,8 @@ const Profile = (props) => {
     name,
     bio, 
     location,
+    // avatar is provided but not used directly - we use avatar_url instead
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     avatar,
     avatar_url, 
     is_owner, 
@@ -102,3 +105,19 @@ const Profile = (props) => {
 };
 
 export default Profile;
+
+Profile.propTypes = {
+  id: PropTypes.number.isRequired,
+  owner: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  bio: PropTypes.string,
+  location: PropTypes.string,
+  avatar: PropTypes.string,
+  avatar_url: PropTypes.string,
+  is_owner: PropTypes.bool.isRequired,
+  followers_count: PropTypes.number.isRequired,
+  following_count: PropTypes.number.isRequired,
+  following_id: PropTypes.number,
+  handleFollow: PropTypes.func.isRequired,
+  handleUnfollow: PropTypes.func.isRequired,
+};
