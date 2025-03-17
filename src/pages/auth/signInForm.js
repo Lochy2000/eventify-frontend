@@ -14,7 +14,7 @@ import { useRedirect } from "../../hooks/useRedirect";
 import styles from "../../styles/AuthForms.module.css";
 import axiosInstance from "../../api/axiosDefaults";
 
-const SignInForm = () => {
+const SigninForm = () => {
   // Redirect the user if they are already logged in
   useRedirect("loggedIn");
   const setCurrentUser = useSetCurrentUser();
@@ -178,4 +178,4 @@ const SignInForm = () => {
   );
 };
     
-export default SignInForm;
+export default SigninForm;

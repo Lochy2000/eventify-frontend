@@ -1,0 +1,14 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+* text eol=lf
+
+# Treat these as binary files for git
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
+*.svg binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary

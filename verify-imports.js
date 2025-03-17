@@ -1,6 +1,30 @@
 const fs = require('fs');
 const path = require('path');
 
+// Function to check if file exists with case-insensitive search
+const checkFileExistsInsensitive = (basePath, relativePath) => {
+  const normalizedPath = relativePath.replace(/\//g, path.sep);
+  const fullPath = path.join(basePath, normalizedPath);
+  const dir = path.dirname(fullPath);
+  const base = path.basename(fullPath);
+
+  try {
+    // If directory doesn't exist, file can't exist
+    if (!fs.existsSync(dir)) {
+      return false;
+    }
+    
+    // Read directory entries
+    const files = fs.readdirSync(dir);
+    
+    // Check if any entry matches the filename (case-insensitive)
+    return files.some(file => file.toLowerCase() === base.toLowerCase());
+  } catch (err) {
+    console.error(`Error checking file existence: ${err.message}`);
+    return false;
+  }
+};
+
 // List of expected imports in App.js
 const expectedImports = [
   './components/common/NavBar',
@@ -42,20 +66,19 @@ console.log('\nVerifying file existence...');
 let allFilesExist = true;
 
 expectedImports.forEach(importPath => {
-  // Convert import path to file path
-  const filePath = path.join(__dirname, 'src', ...importPath.replace('./', '').split('/'));
-  const jsFilePath = filePath + '.js';
-  const jsxFilePath = filePath + '.jsx';
-  const indexJsPath = path.join(filePath, 'index.js');
+  // Convert import path to file path without the extension
+  const relativePath = importPath.replace('./', '');
+  const basePath = path.join(__dirname, 'src');
   
-  if (fs.existsSync(jsFilePath)) {
-    console.log(`✅ File exists: ${jsFilePath}`);
-  } else if (fs.existsSync(jsxFilePath)) {
-    console.log(`✅ File exists: ${jsxFilePath}`);
-  } else if (fs.existsSync(indexJsPath)) {
-    console.log(`✅ File exists: ${indexJsPath}`);
+  // Check for JS file with case-insensitive search
+  const fileExists = checkFileExistsInsensitive(basePath, `${relativePath}.js`) || 
+                   checkFileExistsInsensitive(basePath, `${relativePath}.jsx`) || 
+                   checkFileExistsInsensitive(basePath, `${relativePath}/index.js`);
+  
+  if (fileExists) {
+    console.log(`\u2705 File exists (case-insensitive): ${relativePath}`);
   } else {
-    console.error(`❌ File not found: ${jsFilePath} or ${jsxFilePath} or ${indexJsPath}`);
+    console.error(`\u274c File not found: ${relativePath}`);
     allFilesExist = false;
   }
 });
