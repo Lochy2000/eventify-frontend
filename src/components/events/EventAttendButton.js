@@ -43,6 +43,10 @@ const EventAttendButton = ({ eventId, attendanceId, setEvent }) => {
           attendance_id: data.id
         }));
       }
+      
+      // Refresh the page to ensure UI is updated
+      window.location.reload();
+      
     } catch (err) {
       // Log error but don't crash the app
       console.error('Error toggling event attendance:', err);
