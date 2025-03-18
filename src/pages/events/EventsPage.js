@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Alert } from 'react-bootstrap';
+import React, { useEffect } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import EventList from '../../components/events/EventList';
 import styles from '../../styles/EventsPage.module.css';
 import { useLocation } from 'react-router-dom';
@@ -11,26 +11,10 @@ import { useCurrentUser } from '../../contexts/CurrentUserContext';
 const EventsPage = () => {
   const currentUser = useCurrentUser();
   const { pathname } = useLocation();
-  const [successMessage, setSuccessMessage] = useState("");
 
-  // Set page title and check for success message
+  // Set page title
   useEffect(() => {
     document.title = 'Events | Eventify';
-    
-    // Check for success message in sessionStorage
-    const message = sessionStorage.getItem('deleteMessage');
-    if (message) {
-      setSuccessMessage(message);
-      // Remove the message to prevent showing it again on refresh
-      sessionStorage.removeItem('deleteMessage');
-      
-      // Auto-dismiss the message after 5 seconds
-      const timer = setTimeout(() => {
-        setSuccessMessage('');
-      }, 5000);
-      
-      return () => clearTimeout(timer);
-    }
   }, []);
 
   // Determine which message to show based on URL
@@ -89,11 +73,6 @@ const EventsPage = () => {
     <Container fluid className={styles.EventsPage}>
       <Row className="justify-content-center">
         <Col xs={12} md={10} lg={8}>
-          {successMessage && (
-            <Alert variant="success" dismissible onClose={() => setSuccessMessage('')}>
-              {successMessage}
-            </Alert>
-          )}
           <h1 className={styles.Header}>{getPageTitle()}</h1>
           <p className={styles.Subheader}>{getPageSubtitle()}</p>
           

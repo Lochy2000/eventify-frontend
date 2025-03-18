@@ -40,10 +40,11 @@ const EventCard = ({ event }) => {
   const handleDelete = async () => {
     try {
       await axiosInstance.delete(`/events/${id}/`);
-      // Redirect to events page or refresh the current page
-      navigate('/events');
+      // Force a complete page reload
+      window.location.href = '/events';
     } catch (err) {
       console.error('Error deleting event:', err);
+      alert('Error deleting event. Please try again.');
     }
   };
 

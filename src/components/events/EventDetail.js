@@ -49,20 +49,14 @@ const EventDetail = ({ event, setEvent, setEvents }) => {
   const formattedDate = eventDate.toLocaleDateString();
   const formattedTime = eventDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-  // Handle event deletion with a simpler approach
+  // Very simple direct deletion with page reload
   const handleDelete = () => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this event?");
-    
-    if (confirmDelete) {
+    if (window.confirm("Are you sure you want to delete this event?")) {
       setIsDeleting(true);
-      // Store deletion message in sessionStorage to show after page reload
-      sessionStorage.setItem('deleteMessage', 'Event deleted successfully!');
-      
-      // Make the delete request and force page reload
       axiosInstance.delete(`/events/${id}/`)
         .then(() => {
-          // Redirect to events page with full page reload
-          window.location.href = '/events';
+          alert('Event deleted successfully!'); // Show immediate feedback
+          window.location.href = '/events'; // Force complete page reload
         })
         .catch((err) => {
           console.error('Error deleting event:', err);
