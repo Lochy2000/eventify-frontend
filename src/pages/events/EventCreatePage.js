@@ -14,7 +14,9 @@ const EventCreatePage = () => {
 
   // Redirect if not logged in
   useEffect(() => {
+    console.log('EventCreatePage - Current user state:', currentUser);
     if (!currentUser) {
+      console.log('EventCreatePage - User not logged in, redirecting to signin');
       navigate('/signin');
     }
   }, [currentUser, navigate]);

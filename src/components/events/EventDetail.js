@@ -49,20 +49,26 @@ const EventDetail = ({ event, setEvent, setEvents }) => {
   const formattedDate = eventDate.toLocaleDateString();
   const formattedTime = eventDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-  // Handle event deletion
-  const handleDelete = async () => {
+  // Handle event deletion with a simpler approach
+  const handleDelete = () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this event?");
     
     if (confirmDelete) {
-      try {
-        setIsDeleting(true);
-        await axiosInstance.delete(`/events/${id}/`);
-        navigate('/events');
-      } catch (err) {
-        console.error('Error deleting event:', err);
-      } finally {
-        setIsDeleting(false);
-      }
+      setIsDeleting(true);
+      // Store deletion message in sessionStorage to show after page reload
+      sessionStorage.setItem('deleteMessage', 'Event deleted successfully!');
+      
+      // Make the delete request and force page reload
+      axiosInstance.delete(`/events/${id}/`)
+        .then(() => {
+          // Redirect to events page with full page reload
+          window.location.href = '/events';
+        })
+        .catch((err) => {
+          console.error('Error deleting event:', err);
+          alert('Error deleting event. Please try again.');
+          setIsDeleting(false);
+        });
     }
   };
 

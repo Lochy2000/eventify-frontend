@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../api/axiosDefaults';
 import EventCard from './EventCard';
 import Asset from '../common/Asset';
@@ -23,6 +23,7 @@ const EventList = ({ message, filter = "" }) => {
   const [category, setCategory] = useState("");
   const currentUser = useCurrentUser();
   const { pathname } = useLocation();
+  const navigate = useNavigate(); // Add navigate hook
   
   // Fetch events when component mounts or filters change
   useEffect(() => {
@@ -89,7 +90,7 @@ const EventList = ({ message, filter = "" }) => {
           {currentUser && (
             <Button
               className="btn-success"
-              onClick={() => window.location.href = "/events/create"}
+              onClick={() => navigate('/events/create')}
             >
               Create Event
             </Button>
