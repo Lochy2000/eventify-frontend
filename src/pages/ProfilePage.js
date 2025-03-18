@@ -123,12 +123,16 @@ const ProfilePage = () => {
       
       try {
         setFavoritesLoading(true);
-        // Get the user's favorites - this endpoint supports filtering by owner
+        console.log(`Fetching favorites for user: ${username}`);
+        
+        // Get the user's favorites directly from the Django backend
         const { data: favorites } = await axiosInstance.get(`/favorites/?owner__username=${username}`);
+        console.log(`Found ${favorites.results.length} favorites`);
         
         if (favorites.results.length > 0) {
           // Extract event IDs from favorites
           const eventIds = favorites.results.map(favorite => favorite.event);
+          console.log('Event IDs from favorites:', eventIds);
           
           // Get events by IDs
           const promises = eventIds.map(eventId => 
@@ -140,8 +144,10 @@ const ProfilePage = () => {
             results: eventsResponses.map(response => response.data)
           };
           
+          console.log(`Retrieved ${events.results.length} favorited events for ${username}`);
           setFavoriteEvents(events);
         } else {
+          console.log(`No favorites found for ${username}`);
           setFavoriteEvents({ results: [] });
         }
       } catch (err) {

@@ -1,5 +1,5 @@
 # Eventify - Event Management Platform (Frontend)
-
+![alt text](public/assets/images/homaepage/logo.jpg)
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Project Goals](#project-goals)
@@ -96,13 +96,48 @@ The application is designed to be fully responsive with a mobile-first approach:
    ![Mobile Search](public/assets/images/wireframes/mobile/search.png)
 
 ### Design Choices
-The design of Eventify emphasizes clarity, usability, and responsive layout:
+The design of Eventify emphasizes clarity, usability, and responsive layout to create an intuitive and engaging user experience:
 
-- **Color Scheme**: A clean color palette with strategic accent colors to highlight important actions
-- **Typography**: Modern, readable fonts that work well across device sizes
-- **Layout**: Card-based design for events to provide consistent presentation of information
-- **Navigation**: Intuitive navigation with clear, descriptive labels
-- **Responsive Design**: Mobile-first approach ensuring usability on all device sizes
+#### Color Scheme
+- **Primary Color (Blue #0D6EFD)**: Used for primary buttons, links, and highlighting important actions. Blue was chosen because it conveys trustworthiness and reliability, important qualities for an event platform.
+- **Secondary Color (Gray #6C757D)**: Used for secondary buttons and less prominent UI elements. Creates visual hierarchy without distracting from primary actions.
+- **Success Color (Green #198754)**: Used for success messages and confirmations, such as successful event creation or registration.
+- **Warning Color (Yellow #FFC107)**: Used sparingly for warnings or important notices that require attention but are not critical errors.
+- **Danger Color (Red #DC3545)**: Used for error messages, delete actions, and critical warnings. The high-contrast red immediately draws user attention to potential issues.
+- **Light Background (White/Light Gray)**: Creates a clean, modern look that improves readability and reduces eye strain during extended use.
+
+#### Typography
+- **Primary Font (System UI)**: Using system fonts improves performance and ensures text looks native on all devices.
+- **Font Sizes**: Carefully selected to maintain readability across all device sizes:
+  - Headings: Bold, larger sizes (1.25-2.5rem) for clear content hierarchy
+  - Body Text: 1rem (16px) for optimal readability
+  - Small Text: 0.875rem for secondary information
+- **Line Height**: Set at 1.5 for body text to improve readability for longer content descriptions
+
+#### Layout
+- **Card-Based Design**: Events are displayed in consistent cards that provide all essential information at a glance, with clear visual hierarchy.
+- **Grid System**: Bootstrap's responsive grid system ensures consistent spacing and alignment of elements.
+- **Whitespace**: Liberal use of whitespace between elements reduces visual clutter and improves focus on important content.
+- **Content Hierarchy**: Information is presented in order of importance, with critical details (event title, date, location) more prominent than secondary details.
+
+#### Navigation
+- **Fixed Navigation Bar**: Always accessible at the top of the screen for easy navigation between sections.
+- **Clear Labeling**: Descriptive labels with icons for improved recognition and accessibility.
+- **Mobile Navigation**: Collapses into a hamburger menu on smaller screens to maximize content space.
+
+#### Responsive Design
+- **Mobile-First Approach**: Designed initially for mobile devices, then progressively enhanced for larger screens.
+- **Breakpoints**: Strategic breakpoints at 576px, 768px, 992px, and 1200px to optimize layout across device sizes.
+- **Flexible Images**: Images resize proportionally to fit different screen sizes without distortion.
+- **Touch-Friendly UI**: Large touch targets (minimum 44x44px) for buttons and interactive elements on mobile devices.
+
+#### User Interface Elements
+- **Buttons**: Clear visual distinction between primary, secondary, and tertiary actions.
+- **Forms**: Consistent styling with clear validation feedback and helper text.
+- **Loading States**: Skeleton screens and spinners to indicate when content is loading.
+- **Feedback Messages**: Toast notifications for user actions with appropriate colors for different message types.
+
+These design decisions were made specifically to support the user stories and provide the best possible experience for event creators and attendees.
 
 ## Features
 
@@ -296,7 +331,7 @@ The platform includes a dedicated People page that:
    - Search is performed client-side for instant results
 
 ## Component Architecture
-Eventify's frontend is built using a component-based architecture with a clear separation of concerns. The project structure is organized as follows:
+Eventify's frontend is built using a component-based architecture with a clear separation of concerns and an emphasis on reusable components. The project structure is organized as follows:
 
 ```
 eventify-frontend/
@@ -404,6 +439,29 @@ The project follows best practices for React component organization:
    - API logic is centralized in the api directory
    - CSS is modularized with CSS modules
 
+### Reusable Components
+
+The application makes extensive use of reusable components to maintain consistency and reduce code duplication:
+
+1. **Common UI Components**
+   - `Avatar` - Displays user profile images with consistent styling
+   - `Asset` - Handles loading states and fallback images throughout the app
+   - `NavBar` - Consistent navigation across all pages with responsive design
+   - `Footer` - Standard footer with consistent styling
+
+2. **Event Components**
+   - `EventCard` - Reusable card component for displaying event preview information
+   - `EventAttendButton` - Button component for registering/unregistering for events
+   - `EventList` - Component for displaying lists of events with consistent styling
+
+3. **Interactive Components**
+   - `CommentForm` - Reusable form for adding comments
+   - `Comment` - Standardized display of comments with edit/delete functionality
+   - `FavoriteButton` - Toggle button for favoriting events
+   - `ProfileCard` - Standardized display of user profile information
+
+These reusable components maintain consistent design language throughout the application and significantly improve development efficiency by avoiding code duplication.
+
 ## Technologies Used
 
 ### Languages
@@ -412,12 +470,15 @@ The project follows best practices for React component organization:
 - JavaScript (ES6+)
 
 ### Frameworks & Libraries
-- React.js - Frontend library for building the user interface
-- React Router - For handling navigation and routing
-- React Bootstrap - UI component library
-- Axios - For making HTTP requests to the API
-- Date-fns - For date formatting and manipulation
-- JWT Decode - For decoding JWT tokens
+- **React.js** - Frontend library for building the user interface. Chosen for its component-based architecture which allows for efficient UI development and state management.
+- **React Router** - For handling navigation and routing in a single-page application. Provides a clean way to handle navigation without page reloads.
+- **React Bootstrap** - UI component library that provides pre-styled components with responsive design. Speeds up development and ensures consistency.
+- **Axios** - For making HTTP requests to the API. Offers a simple API, good error handling, and automatic JSON transformation.
+- **Date-fns** - For date formatting and manipulation. A lightweight alternative to Moment.js with better tree-shaking support.
+- **JWT Decode** - For securely decoding JWT tokens. Essential for handling authentication.
+- **Formik** - For form handling with validation. Simplifies the process of building, validating, and submitting forms.
+- **Yup** - Schema validation library that works well with Formik for form validation.
+- **React Toastify** - For displaying toast notifications to users. Provides a clean, user-friendly way to show feedback.
 
 ### Development Tools
 - Git & GitHub - Version control and code repository
@@ -425,7 +486,24 @@ The project follows best practices for React component organization:
 - VS Code - Code editor
 - ESLint - For code quality and validation
 
+### Development Approach
+- **Agile Methodology** - The project was developed using Agile principles with the following elements:
+  - User stories organized into epics for a clear development roadmap
+  - GitHub Projects for tracking tasks and issues
+  - Iterative development approach with regular reviews
+  - User-centric design decisions based on the user stories
+
 ## Testing
+
+### Problem-Solving Example
+
+During development, a significant issue was encountered and resolved with event filtering:
+
+**Problem**: The favorites and attending filters weren't working correctly. When users tried to view their favorited events, the application would show all events instead of just the ones they had favorited.
+
+**Solution**: Updated the backend EventList view with a custom `get_queryset` method that properly handles the `favorite=true` and `attending=true` filter parameters. Also simplified the frontend filter string to match what the backend expected.
+
+**Result**: Users can now correctly view only their favorited events and events they're attending, enhancing the personalized experience of the application.
 
 ### Manual Testing
 Comprehensive manual testing was performed on all features to ensure proper functionality and user experience.
@@ -565,44 +643,141 @@ Code quality and validation were important priorities for this project:
   - Ensured consistent behavior across browsers
 
 ## Deployment
-The frontend application is deployed on Heroku. You can access the live application at [https://eventify-react-ff1e525f1dc0.herokuapp.com/](https://eventify-react-ff1e525f1dc0.herokuapp.com/).
+
+The frontend application is deployed on Heroku, a cloud platform that enables developers to build, run, and operate applications entirely in the cloud. You can access the live application at [https://eventify-react-ff1e525f1dc0.herokuapp.com/](https://eventify-react-ff1e525f1dc0.herokuapp.com/).
+
+### Deployment Process
+
+#### Prerequisites
+- GitHub account connected to Heroku
+- Heroku CLI installed (optional, but helpful for troubleshooting)
+- Node.js and npm installed locally
+
+#### Preparing the Application for Deployment
+
+1. **Create Production Build**
+   - The application uses the following script in package.json to create a production build:
+     ```
+     "build": "CI=false react-scripts build"
+     ```
+   - Setting `CI=false` prevents the build from failing on warnings
+
+2. **Configure Server for Production**
+   - Created `server.js` in the root directory to serve the production build:
+     ```javascript
+     const express = require('express');
+     const path = require('path');
+     const app = express();
+     const PORT = process.env.PORT || 3000;
+
+     // Serve static files from the React build
+     app.use(express.static(path.join(__dirname, 'build')));
+
+     // All other requests get sent to the React app
+     app.get('*', (req, res) => {
+       res.sendFile(path.join(__dirname, 'build', 'index.html'));
+     });
+
+     app.listen(PORT, () => {
+       console.log(`Server is running on port ${PORT}`);
+     });
+     ```
+
+3. **Configure start script**
+   - Updated the `start` script in package.json to use the server in production:
+     ```
+     "start": "node server.js"
+     ```
+
+4. **Configure Necessary Files**
+   - Created `static.json` for routing configuration:
+     ```json
+     {
+       "root": "build/",
+       "routes": {
+         "/**": "index.html"
+       }
+     }
+     ```
+   - Added Node.js and npm versions to package.json:
+     ```json
+     "engines": {
+       "node": "16.x",
+       "npm": "8.x"
+     }
+     ```
+
+#### Deploying to Heroku
+
+1. **Create a Heroku Application**
+   - Logged in to Heroku Dashboard and created a new app named "eventify-react"
+   - Selected the appropriate region (Europe)
+
+2. **Connect to GitHub**
+   - In the Heroku Dashboard, went to the "Deploy" tab
+   - Selected GitHub as the deployment method
+   - Connected to the GitHub repository
+
+3. **Configure Environment Variables**
+   - In the "Settings" tab, added the following config vars:
+     - `REACT_APP_API_URL`: URL to the deployed backend API (https://eventify-back-d016873ba1b8.herokuapp.com/api)
+     - `REACT_APP_CLOUDINARY_CLOUD_NAME`: Cloudinary cloud name for image uploads
+
+4. **Deploy the Application**
+   - Enabled automatic deploys from the main branch
+   - Performed initial manual deploy by clicking "Deploy Branch"
+
+5. **Verify Deployment**
+   - Monitored the build logs for any errors
+   - Once deployment was complete, opened the app to verify it was working correctly
+   - Tested authentication, event creation, and other core features in the production environment
 
 ### Local Deployment
+
 1. Clone this repository:
    ```
    git clone https://github.com/yourusername/eventify-frontend.git
    ```
+
 2. Navigate to the project directory:
    ```
    cd eventify-frontend
    ```
+
 3. Install dependencies:
    ```
    npm install
    ```
+
 4. Create a `.env` file in the root directory with the following variables:
    ```
    REACT_APP_API_URL=http://localhost:8000/api
+   REACT_APP_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
    ```
+
 5. Start the development server:
    ```
-   npm start
+   npm run dev
    ```
+
 6. The application should now be running on http://localhost:3000
 
-### Production Deployment
-The application is deployed to Heroku using the following steps:
+### Deployment Updates
 
-1. Create a new Heroku app
-2. Set up environment variables in Heroku:
-   - REACT_APP_API_URL: URL to the deployed backend API
-3. Connect the GitHub repository to Heroku
-4. Enable automatic deploys or manually deploy from main branch
-5. Verify the deployment is working correctly
+When making changes to the deployed application:
+
+1. Push changes to the GitHub repository
+2. If automatic deploys are enabled, Heroku will automatically build and deploy the updated application
+3. If not, manually deploy from the Heroku Dashboard
+4. Monitor the build logs for any errors
+5. Verify the changes are working as expected in the production environment
 
 ## Credits
 - React Bootstrap for UI components
 - Font Awesome for icons
+- https://github.com/hannahro15/CI-Feb25-hackathon. Was part of this team, where my main role was creating the models, views and serialzers for the events app.
+- Onlook-setup to create wireframes
+- chatgpt for problem shooting erros when I got stuck
 - Cloudinary for image hosting
 - Various npm packages listed in package.json
 - Code Institute for project inspiration and guidance

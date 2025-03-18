@@ -195,6 +195,26 @@ const EventDetail = ({ event, setEvent, setEvents }) => {
               setEvents={setEvents}
             />
           )}
+
+          {/* Add edit and delete buttons for event owners at the bottom as well */}
+          {is_owner && (
+            <div className="mt-3 d-flex justify-content-end">
+              <Button
+                variant="outline-primary"
+                className="me-2"
+                onClick={() => navigate(`/events/${id}/edit`)}
+              >
+                <i className="fas fa-edit me-1"></i> Edit Event
+              </Button>
+              <Button
+                variant="outline-danger"
+                onClick={handleDelete}
+                disabled={isDeleting}
+              >
+                <i className="fas fa-trash me-1"></i> Delete Event
+              </Button>
+            </div>
+          )}
         </div>
       </Card.Body>
     </Card>

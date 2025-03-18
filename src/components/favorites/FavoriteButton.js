@@ -23,66 +23,43 @@ const FavoriteButton = ({ eventId, favoriteId, setEvent, setEvents }) => {
   const handleFavorite = async () => {
     try {
       setIsToggling(true);
+      console.log('Current user:', currentUser?.username);
+      console.log('Favorite ID:', favoriteId);
 
       if (favoriteId) {
         // User has already favorited, so unfavorite
+        console.log(`Deleting favorite with ID: ${favoriteId}`);
         await axiosInstance.delete(`/favorites/${favoriteId}/`);
         
-        // Update event state to reflect unfavorite
+        // Update local state
         setEvent(prevEvent => ({
           ...prevEvent,
-          favorites_count: prevEvent.favorites_count - 1,
+          favorites_count: prevEvent.favorites_count ? prevEvent.favorites_count - 1 : 0,
           favorite_id: null
         }));
-        
-        // Update events list if provided
-        if (setEvents) {
-          setEvents(prevEvents => ({
-            ...prevEvents,
-            results: prevEvents.results.map(event => {
-              return event.id === eventId
-                ? {
-                    ...event,
-                    favorites_count: event.favorites_count - 1,
-                    favorite_id: null,
-                  }
-                : event;
-            }),
-          }));
-        }
       } else {
         // User has not favorited, so add favorite
+        console.log(`Adding favorite for event ID: ${eventId}`);
         const { data } = await axiosInstance.post('/favorites/', { event: eventId });
+        console.log('Favorite created:', data);
         
-        // Update event state to reflect favorite
+        // Update local state
         setEvent(prevEvent => ({
           ...prevEvent,
-          favorites_count: prevEvent.favorites_count + 1,
+          favorites_count: (prevEvent.favorites_count || 0) + 1,
           favorite_id: data.id
         }));
-        
-        // Update events list if provided
-        if (setEvents) {
-          setEvents(prevEvents => ({
-            ...prevEvents,
-            results: prevEvents.results.map(event => {
-              return event.id === eventId
-                ? {
-                    ...event,
-                    favorites_count: event.favorites_count + 1,
-                    favorite_id: data.id,
-                  }
-                : event;
-            }),
-          }));
-        }
       }
       
-      // Refresh the page to ensure UI is updated
+      // Reload the page to ensure UI is in sync with backend
       window.location.reload();
       
     } catch (err) {
       console.error('Error toggling favorite:', err);
+      if (err.response?.data) {
+        console.error('Error details:', err.response.data);
+      }
+      alert('There was an error processing your favorite request. Please try again.');
     } finally {
       setIsToggling(false);
     }

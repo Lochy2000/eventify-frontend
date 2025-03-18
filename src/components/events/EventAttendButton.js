@@ -33,6 +33,9 @@ const EventAttendButton = ({ eventId, attendanceId, setEvent }) => {
           attendees_count: prevEvent.attendees_count - 1,
           attendance_id: null
         }));
+
+        // Reload the page to show updated UI
+        window.location.reload();
       } else {
         // User is not registered, so register
         const { data } = await axiosInstance.post('/attendees/', { event: eventId });
@@ -43,14 +46,15 @@ const EventAttendButton = ({ eventId, attendanceId, setEvent }) => {
           attendees_count: prevEvent.attendees_count + 1,
           attendance_id: data.id
         }));
+
+        // Reload the page to show updated UI
+        window.location.reload();
       }
-      
-      // Refresh the page to ensure UI is updated
-      window.location.reload();
       
     } catch (err) {
       // Log error but don't crash the app
       console.error('Error toggling event attendance:', err);
+      alert('There was an error processing your request. Please try again.');
     } finally {
       setIsRegistering(false);
     }

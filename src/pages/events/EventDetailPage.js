@@ -35,15 +35,14 @@ const EventDetailPage = () => {
           try {
             const { data: attendeesData } = await axiosInstance.get(`/events/${id}/attendees/`);
             setAttendees(attendeesData);
+            console.log('Attendees loaded:', attendeesData);
           } catch (attendeesErr) {
-            // Using console.error is appropriate for actual errors
             console.error('Error fetching attendees:', attendeesErr);
           }
         }
 
         setHasLoaded(true);
       } catch (err) {
-        // Using console.error is appropriate for actual errors
         console.error('Error fetching event details:', err);
         setError("Event not found or you don't have permission to view it.");
         setHasLoaded(true);
@@ -64,7 +63,10 @@ const EventDetailPage = () => {
               {/* Event details */}
               <EventDetail
                 event={event.results[0]}
-                setEvent={setEvent}
+                setEvent={(updatedEvent) => {
+                  setEvent({ results: [updatedEvent] });
+                }}
+                setEvents={null} // We don't have a list of events to update on this page
               />
               
               {/* Comments section */}
@@ -89,17 +91,20 @@ const EventDetailPage = () => {
                   </Card.Header>
                   <Card.Body className={styles.AttendeesBody}>
                     {attendees.results?.length ? (
-                      attendees.results.slice(0, 5).map((attendee) => (
-                        <div key={attendee.id} className={styles.Attendee}>
-                          <Avatar src={attendee.profile_image} height={40} text={attendee.owner} />
-                          <div className={styles.AttendeeInfo}>
-                            <p className={styles.AttendeeName}>{attendee.owner}</p>
-                            <p className={styles.AttendeeDate}>
-                              Registered: {new Date(attendee.registered_at).toLocaleDateString()}
-                            </p>
+                      <>
+                        {console.log('Rendering attendees:', attendees.results)}
+                        {attendees.results.slice(0, 5).map((attendee) => (
+                          <div key={attendee.id} className={styles.Attendee}>
+                            <Avatar src={attendee.profile_image} height={40} text={attendee.owner} />
+                            <div className={styles.AttendeeInfo}>
+                              <p className={styles.AttendeeName}>{attendee.owner}</p>
+                              <p className={styles.AttendeeDate}>
+                                Registered: {new Date(attendee.registered_at).toLocaleDateString()}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      ))
+                        ))}
+                      </>
                     ) : (
                       <p>No attendees yet.</p>
                     )}
