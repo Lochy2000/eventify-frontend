@@ -428,30 +428,94 @@ The project follows best practices for React component organization:
 ## Testing
 
 ### Manual Testing
-Manual testing was performed on all features:
+Comprehensive manual testing was performed on all features to ensure proper functionality and user experience.
 
-1. **Authentication**
-   - Sign up with new user
-   - Sign in with existing user
-   - Sign out
-   - Attempt to access protected routes without authentication
+#### User Authentication Testing
 
-2. **Event Management**
-   - Create new events
-   - Edit existing events
-   - Delete events
-   - View event details
+| Test Case | Steps | Expected Result | Status |
+|-----------|-------|-----------------|--------|
+| User Registration | 1. Navigate to Sign Up page<br>2. Enter valid username, email, password<br>3. Submit form | User is created and redirected to sign in page with success message | ✅ |
+| Registration Validation | 1. Navigate to Sign Up page<br>2. Enter invalid data (e.g., short password)<br>3. Submit form | Form shows validation errors and prevents submission | ✅ |
+| User Login | 1. Navigate to Sign In page<br>2. Enter valid credentials<br>3. Submit form | User is authenticated and redirected to home page | ✅ |
+| Login Validation | 1. Navigate to Sign In page<br>2. Enter invalid credentials<br>3. Submit form | Error message displayed, form not submitted | ✅ |
+| User Logout | 1. Click logout button when signed in | User is logged out and redirected to home page | ✅ |
+| Protected Route Access | 1. Try to access protected route (e.g., /events/create) when not logged in | User is redirected to login page | ✅ |
+| Authentication Persistence | 1. Log in<br>2. Refresh the page | User remains logged in | ✅ |
 
-3. **Profile Features**
-   - View profile
-   - Edit profile details
-   - Upload profile images
-   - View followers and following
+#### Event Management Testing
 
-4. **Navigation**
-   - All navigation links work correctly
-   - Protected routes redirect appropriately
-   - Mobile responsiveness
+| Test Case | Steps | Expected Result | Status |
+|-----------|-------|-----------------|--------|
+| View Events List | 1. Navigate to Events page | Events are displayed in grid/list format with images and key details | ✅ |
+| Event Pagination | 1. Navigate to Events page with many events | Events are paginated with working next/previous buttons | ✅ |
+| Event Search | 1. Enter search term in search bar<br>2. Submit search | Events matching search term are displayed | ✅ |
+| Event Filtering | 1. Select category filter<br>2. Apply filter | Only events in selected category are displayed | ✅ |
+| Event Detail View | 1. Click on an event card | Event detail page shows all information about the event | ✅ |
+| Create Event | 1. Navigate to Create Event page<br>2. Fill in all fields<br>3. Upload image<br>4. Submit form | Event is created and displayed in events list and user's profile | ✅ |
+| Create Event Validation | 1. Navigate to Create Event page<br>2. Submit form with missing required fields | Form validation errors displayed, submission prevented | ✅ |
+| Edit Event | 1. Navigate to event created by logged-in user<br>2. Click Edit button<br>3. Modify fields<br>4. Submit form | Event is updated with new information | ✅ |
+| Delete Event | 1. Navigate to event created by logged-in user<br>2. Click Delete button<br>3. Confirm deletion | Event is removed from events list | ✅ |
+
+#### Event Interaction Testing
+
+| Test Case | Steps | Expected Result | Status |
+|-----------|-------|-----------------|--------|
+| Register for Event | 1. Navigate to event detail<br>2. Click Attend/Register button | User is registered for event and button changes state | ✅ |
+| Cancel Registration | 1. Navigate to event user is registered for<br>2. Click Cancel Registration button | User's registration is removed and button changes state | ✅ |
+| Favorite Event | 1. Navigate to event<br>2. Click Favorite button | Event is added to user's favorites and button changes state | ✅ |
+| Unfavorite Event | 1. Navigate to event user has favorited<br>2. Click Favorite button again | Event is removed from user's favorites and button changes state | ✅ |
+| Add Comment | 1. Navigate to event detail<br>2. Enter comment text<br>3. Submit comment | Comment appears in comment list with user information | ✅ |
+| Edit Comment | 1. Navigate to event with user's comment<br>2. Click Edit<br>3. Modify text<br>4. Submit | Comment is updated with new text | ✅ |
+| Delete Comment | 1. Navigate to event with user's comment<br>2. Click Delete<br>3. Confirm deletion | Comment is removed from comment list | ✅ |
+
+#### Profile & Social Features Testing
+
+| Test Case | Steps | Expected Result | Status |
+|-----------|-------|-----------------|--------|
+| View Profile | 1. Click on username or navigate to profile URL | User profile is displayed with correct information | ✅ |
+| Edit Profile | 1. Navigate to own profile<br>2. Click Edit Profile<br>3. Modify fields<br>4. Submit form | Profile is updated with new information | ✅ |
+| Upload Profile Picture | 1. Navigate to Edit Profile<br>2. Select image file<br>3. Submit form | Profile picture is updated | ✅ |
+| Follow User | 1. Navigate to another user's profile<br>2. Click Follow button | User is followed and button changes to "Following" | ✅ |
+| Unfollow User | 1. Navigate to profile of user being followed<br>2. Click "Following" button | User is unfollowed and button changes to "Follow" | ✅ |
+| View Following/Followers | 1. Navigate to profile<br>2. Click on Followers/Following count | List of followers/following users is displayed | ✅ |
+| View Events by User | 1. Navigate to user profile | Events created by user are displayed | ✅ |
+| View Attending Events | 1. Navigate to own profile<br>2. Go to Attending tab | Events user is registered for are displayed | ✅ |
+| View Favorite Events | 1. Navigate to own profile<br>2. Go to Favorites tab | Events user has favorited are displayed | ✅ |
+
+#### Responsive Design Testing
+
+| Test Case | Steps | Expected Result | Status |
+|-----------|-------|-----------------|--------|
+| Desktop Layout | 1. Open application on desktop (>1024px)<br>2. Navigate through main pages | All elements are properly aligned and sized for desktop | ✅ |
+| Tablet Layout | 1. Open application on tablet (768px-1024px)<br>2. Navigate through main pages | Layout adjusts for medium screens with appropriate sizing | ✅ |
+| Mobile Layout | 1. Open application on mobile (<768px)<br>2. Navigate through main pages | Single-column layout, hamburger menu appears, elements stack vertically | ✅ |
+| Navigation Menu (Mobile) | 1. View on mobile device<br>2. Click hamburger icon<br>3. Test navigation links | Menu opens/closes correctly, links function properly | ✅ |
+| Image Responsiveness | 1. View event images on different devices | Images resize appropriately without distortion | ✅ |
+| Form Responsiveness | 1. Open forms on different devices<br>2. Test input fields | Forms adjust to screen width, inputs are usable on touch devices | ✅ |
+
+
+
+#### Error Handling & Feedback Testing
+
+| Test Case | Steps | Expected Result | Status |
+|-----------|-------|-----------------|--------|
+| Form Validation Feedback | 1. Submit forms with invalid data | Appropriate error messages appear with clear instructions | ✅ |
+| API Error Handling | 1. Simulate API errors (e.g., disconnect internet)<br>2. Attempt operations | User-friendly error messages appear, app doesn't crash | ✅ |
+| Loading States | 1. Navigate between pages<br>2. Submit forms<br>3. Load data-heavy pages | Loading indicators appear during data fetching operations | ✅ |
+| Success Feedback | 1. Perform successful operations (create/edit/delete)<br>2. Submit forms successfully | Success messages appear to confirm actions | ✅ |
+| 404 Page | 1. Navigate to non-existent URL | Custom 404 page appears with navigation back to valid pages | ✅ |
+
+#### Cross-Browser Testing
+
+| Browser | Version | Functionality | Appearance |
+|---------|---------|--------------|------------|
+| Chrome | Latest | ✅ | ✅ |
+| Firefox | Latest | ✅ | ✅ |
+| Safari | Latest | ✅ | ✅ |
+| Edge | Latest | ✅ | ✅ |
+
+
+
 
 ### Automated Testing
 Basic automated tests were implemented for key components to demonstrate testing approach:
