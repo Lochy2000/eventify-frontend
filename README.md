@@ -1,5 +1,9 @@
 # Eventify - Event Management Platform (Frontend)
 ![alt text](public/assets/images/homaepage/logo.jpg)
+
+### Live Site
+https://eventify-front-e281c9a84c02.herokuapp.com/
+
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Project Goals](#project-goals)
